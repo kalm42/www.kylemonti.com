@@ -31,54 +31,54 @@ Two themes: `light` (Ivory) is first and the fallback; `dark` (Evergreen night) 
 These fail contrast checks — never work around them by changing a colour, only by using the right token:
 
 - `brass` as text on any `paper` ground (3.6:1 in light, under the 4.5:1 a word needs — brass is for marks only). Use `brass-ink` for words.
-- `brand-hover` as text on a `brand` fill (~1.3:1). Hover swaps the *fill* from `brand` to `brand-hover`; text stays `on-brand`. `brand-hover` is only a link colour on `paper*` grounds or `brand-tint`.
+- `brand-hover` as text on a `brand` fill (~1.3:1). Hover swaps the _fill_ from `brand` to `brand-hover`; text stays `on-brand`. `brand-hover` is only a link colour on `paper*` grounds or `brand-tint`.
 - `code-ground` as a text/icon colour on `code-line`, or `code-line` as text on `code-ground` — both are fills. Code text uses only `code-ink` and the other `code-*` text tokens.
 - `hairline` or `paper-raised` as the only edge of a control (~1.3:1 / ~1.1:1). Controls use `border-strong`.
 - `ink-subtle` for anything a reader must act on, or any text token on a fill its usage note doesn't name.
 
 ### Tokens
 
-| Token | Light | Dark | Usage |
-| --- | --- | --- | --- |
-| `paper` | `#f6f1e7` | `#0f1813` | Page background. |
-| `paper-raised` | `#fbf8f1` | `#16221b` | Cards, scrolled header, popovers, inputs. |
-| `paper-sunken` | `#ede5d5` | `#0a110d` | Inline code chips, resume sidebar, image wells. |
-| `ink` | `#1c1914` | `#f0eadb` | Primary text on any `paper*`, `brand-tint`, `brass-tint`. |
-| `ink-muted` | `#57503f` | `#bdb49e` | Secondary text: excerpts, nav at rest, captions. |
-| `ink-subtle` | `#6b6450` | `#9a927e` | Tertiary only: dates, reading times, footer notes. Never actionable text. |
-| `hairline` | `#dcd2bd` | `#2a3a31` | Decorative dividers/outlines only (under 3:1). |
-| `border-strong` | `#8b805f` | `#6a7d70` | Controls that carry meaning: inputs, toggle, tag outlines, checkbox edges. |
-| `brand` | `#1e4636` | `#9dcdb3` | Links, primary button fill, active nav mark, focus. |
-| `brand-hover` | `#143427` | `#b9e0c9` | Hover/pressed state of `brand`. Never text on a `brand` fill. |
-| `on-brand` | `#f6f1e7` | `#0c1510` | Text/icons on `brand` or `brand-hover` fills. |
-| `brand-tint` | `#dfe8dd` | `#1c3226` | Selected nav item, note callouts, tag hover. |
-| `brass` | `#a37628` | `#d3a955` | Marks only: ornaments, hover edges, numerals-as-shapes, list markers. |
-| `brass-ink` | `#77500f` | `#dcb872` | Brass as text: eyebrows, hover dates, tip callout labels. |
-| `brass-tint` | `#eddcb4` | `#3a3018` | `::selection`, tip callouts, highlighted table rows. |
-| `danger` | `#8a2b34` | `#f0a3a6` | Oxblood. Caution callouts, form errors — always with a word/icon. |
-| `danger-tint` | `#f1d9d6` | `#3a1d20` | Background for caution callouts, error rows. |
-| `focus-ring` | `#1e4636` | `#b9e0c9` | Keyboard focus: solid 2px outline, 3px offset, every interactive element. |
-| `code-ground` | `#12201a` | `#0a120e` | Code block fill — dark on ivory in both themes. Fill only, never text. |
-| `code-ink` | `#ece5d3` | `#ece5d3` | Default code text. |
-| `code-comment` | `#8fa094` | `#8fa094` | Comments, italic mono. |
-| `code-keyword` | `#e0b866` | `#e0b866` | Keywords, storage, control flow (brass). |
-| `code-string` | `#a3d6b8` | `#a3d6b8` | Strings, template text (sage). |
-| `code-number` | `#eba080` | `#eba080` | Numbers, booleans, constants (terracotta). |
-| `code-function` | `#f3dfa8` | `#f3dfa8` | Function/method names (pale gold). |
-| `code-type` | `#dfa9b3` | `#dfa9b3` | Types, classes, JSX tags (dusty rose). |
-| `code-punctuation` | `#a9b3a8` | `#a9b3a8` | Brackets, operators, separators. |
-| `code-line` | `#1d2f26` | `#15231b` | Highlighted line background inside a code block. |
-| `code-border` | `#2d4237` | `#2d4237` | Hairline around code blocks and filename bar. |
+| Token              | Light     | Dark      | Usage                                                                      |
+| ------------------ | --------- | --------- | -------------------------------------------------------------------------- |
+| `paper`            | `#f6f1e7` | `#0f1813` | Page background.                                                           |
+| `paper-raised`     | `#fbf8f1` | `#16221b` | Cards, scrolled header, popovers, inputs.                                  |
+| `paper-sunken`     | `#ede5d5` | `#0a110d` | Inline code chips, resume sidebar, image wells.                            |
+| `ink`              | `#1c1914` | `#f0eadb` | Primary text on any `paper*`, `brand-tint`, `brass-tint`.                  |
+| `ink-muted`        | `#57503f` | `#bdb49e` | Secondary text: excerpts, nav at rest, captions.                           |
+| `ink-subtle`       | `#6b6450` | `#9a927e` | Tertiary only: dates, reading times, footer notes. Never actionable text.  |
+| `hairline`         | `#dcd2bd` | `#2a3a31` | Decorative dividers/outlines only (under 3:1).                             |
+| `border-strong`    | `#8b805f` | `#6a7d70` | Controls that carry meaning: inputs, toggle, tag outlines, checkbox edges. |
+| `brand`            | `#1e4636` | `#9dcdb3` | Links, primary button fill, active nav mark, focus.                        |
+| `brand-hover`      | `#143427` | `#b9e0c9` | Hover/pressed state of `brand`. Never text on a `brand` fill.              |
+| `on-brand`         | `#f6f1e7` | `#0c1510` | Text/icons on `brand` or `brand-hover` fills.                              |
+| `brand-tint`       | `#dfe8dd` | `#1c3226` | Selected nav item, note callouts, tag hover.                               |
+| `brass`            | `#a37628` | `#d3a955` | Marks only: ornaments, hover edges, numerals-as-shapes, list markers.      |
+| `brass-ink`        | `#77500f` | `#dcb872` | Brass as text: eyebrows, hover dates, tip callout labels.                  |
+| `brass-tint`       | `#eddcb4` | `#3a3018` | `::selection`, tip callouts, highlighted table rows.                       |
+| `danger`           | `#8a2b34` | `#f0a3a6` | Oxblood. Caution callouts, form errors — always with a word/icon.          |
+| `danger-tint`      | `#f1d9d6` | `#3a1d20` | Background for caution callouts, error rows.                               |
+| `focus-ring`       | `#1e4636` | `#b9e0c9` | Keyboard focus: solid 2px outline, 3px offset, every interactive element.  |
+| `code-ground`      | `#12201a` | `#0a120e` | Code block fill — dark on ivory in both themes. Fill only, never text.     |
+| `code-ink`         | `#ece5d3` | `#ece5d3` | Default code text.                                                         |
+| `code-comment`     | `#8fa094` | `#8fa094` | Comments, italic mono.                                                     |
+| `code-keyword`     | `#e0b866` | `#e0b866` | Keywords, storage, control flow (brass).                                   |
+| `code-string`      | `#a3d6b8` | `#a3d6b8` | Strings, template text (sage).                                             |
+| `code-number`      | `#eba080` | `#eba080` | Numbers, booleans, constants (terracotta).                                 |
+| `code-function`    | `#f3dfa8` | `#f3dfa8` | Function/method names (pale gold).                                         |
+| `code-type`        | `#dfa9b3` | `#dfa9b3` | Types, classes, JSX tags (dusty rose).                                     |
+| `code-punctuation` | `#a9b3a8` | `#a9b3a8` | Brackets, operators, separators.                                           |
+| `code-line`        | `#1d2f26` | `#15231b` | Highlighted line background inside a code block.                           |
+| `code-border`      | `#2d4237` | `#2d4237` | Hairline around code blocks and filename bar.                              |
 
 ## Typography
 
 Three families, real variable font files, loaded via `next/font/google`:
 
-| Family token | Font | Role |
-| --- | --- | --- |
-| `display` | Fraunces (SOFT axis 30, WONK 0) | `display-*`, `heading-1`–`heading-3`, `quote`. Weights stay light (340–450) — never bold a headline. |
-| `text` | Newsreader | Everything read: `lede`, `body-lg`, `body`, `ui`, `caption`, `eyebrow`, `heading-4`. |
-| `mono` | JetBrains Mono | Code, filenames, hostnames only: `code-block`, `code-inline`, `code-label`. |
+| Family token | Font                            | Role                                                                                                 |
+| ------------ | ------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `display`    | Fraunces (SOFT axis 30, WONK 0) | `display-*`, `heading-1`–`heading-3`, `quote`. Weights stay light (340–450) — never bold a headline. |
+| `text`       | Newsreader                      | Everything read: `lede`, `body-lg`, `body`, `ui`, `caption`, `eyebrow`, `heading-4`.                 |
+| `mono`       | JetBrains Mono                  | Code, filenames, hostnames only: `code-block`, `code-inline`, `code-label`.                          |
 
 Stacks: `display` → `"Fraunces", "Iowan Old Style", "Palatino Linotype", Georgia, serif`; `text` → `"Newsreader", "Iowan Old Style", Georgia, serif`; `mono` → `"JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace`.
 
@@ -88,27 +88,27 @@ Stacks: `display` → `"Fraunces", "Iowan Old Style", "Palatino Linotype", Georg
 
 ### Type scale
 
-| Style | Size / line-height | Weight | Tracking | Usage |
-| --- | --- | --- | --- | --- |
-| `display-2xl` | 96px / 96px | 340 | -0.03em | Home hero headline, once per page. Drop to `display-xl` <1024px, `display-lg` <640px. |
-| `display-xl` | 72px / 76px | 360 | -0.028em | Section-opening statements, blog index title. |
-| `display-lg` | 56px / 62px | 380 | -0.022em | Resume page name, project index title. |
-| `display-md` | 40px / 48px | 400 | -0.018em | Home section titles (Writing, Workshop). |
-| `display-italic` | 56px / 62px | 340, italic | -0.02em | The one italic word in a headline. `brass-ink` or `brand`, never both. |
-| `quote` | 30px / 42px | 340, italic | -0.01em | Pull quotes. `ink` text, `brass` ornament above — never a side rule. |
-| `heading-1` | 44px / 52px | 400 | -0.02em | Article title. One per page. |
-| `heading-2` | 32px / 40px | 420 | -0.015em | Article section headings, resume section titles. |
-| `heading-3` | 24px / 32px | 450 | -0.01em | Card titles, subsections, resume roles. |
-| `heading-4` (text) | 20px / 28px | 600 | 0em | Small headings in text face: list group titles, footer columns. |
-| `lede` (text) | 24px / 36px | 350, italic | 0em | Standfirst under an article title; one or two sentences. |
-| `body-lg` (text) | 20px / 34px | 400 | 0em | Article prose. Measure 62–68 chars (`container-prose`). |
-| `body` (text) | 18px / 30px | 400 | 0em | Home, resume, project copy; card excerpts. |
-| `ui` (text) | 16px / 24px | 500 | 0.005em | Buttons, nav links, form labels, tags. |
-| `caption` (text) | 14px / 22px | 400 | 0.01em | Dates, reading time, image captions, footer notes — `ink-subtle`. |
-| `eyebrow` (text) | 12px / 16px | 600 | 0.16em | Small-caps labels above titles. Always uppercase (CSS-driven), `brass-ink` or `ink-muted`. |
-| `code-block` (mono) | 14px / 24px | 400 | 0em | Code blocks on `code-ground`. 2-space tabs, ligatures on. |
-| `code-inline` (mono) | 0.86em / 1 | 450 | 0em | Inline code in prose, on `paper-sunken`, `radius-sm`. Relative sizing. |
-| `code-label` (mono) | 12px / 16px | 500 | 0.04em | Filename tab / language chip above a code block. |
+| Style                | Size / line-height | Weight      | Tracking | Usage                                                                                      |
+| -------------------- | ------------------ | ----------- | -------- | ------------------------------------------------------------------------------------------ |
+| `display-2xl`        | 96px / 96px        | 340         | -0.03em  | Home hero headline, once per page. Drop to `display-xl` <1024px, `display-lg` <640px.      |
+| `display-xl`         | 72px / 76px        | 360         | -0.028em | Section-opening statements, blog index title.                                              |
+| `display-lg`         | 56px / 62px        | 380         | -0.022em | Resume page name, project index title.                                                     |
+| `display-md`         | 40px / 48px        | 400         | -0.018em | Home section titles (Writing, Workshop).                                                   |
+| `display-italic`     | 56px / 62px        | 340, italic | -0.02em  | The one italic word in a headline. `brass-ink` or `brand`, never both.                     |
+| `quote`              | 30px / 42px        | 340, italic | -0.01em  | Pull quotes. `ink` text, `brass` ornament above — never a side rule.                       |
+| `heading-1`          | 44px / 52px        | 400         | -0.02em  | Article title. One per page.                                                               |
+| `heading-2`          | 32px / 40px        | 420         | -0.015em | Article section headings, resume section titles.                                           |
+| `heading-3`          | 24px / 32px        | 450         | -0.01em  | Card titles, subsections, resume roles.                                                    |
+| `heading-4` (text)   | 20px / 28px        | 600         | 0em      | Small headings in text face: list group titles, footer columns.                            |
+| `lede` (text)        | 24px / 36px        | 350, italic | 0em      | Standfirst under an article title; one or two sentences.                                   |
+| `body-lg` (text)     | 20px / 34px        | 400         | 0em      | Article prose. Measure 62–68 chars (`container-prose`).                                    |
+| `body` (text)        | 18px / 30px        | 400         | 0em      | Home, resume, project copy; card excerpts.                                                 |
+| `ui` (text)          | 16px / 24px        | 500         | 0.005em  | Buttons, nav links, form labels, tags.                                                     |
+| `caption` (text)     | 14px / 22px        | 400         | 0.01em   | Dates, reading time, image captions, footer notes — `ink-subtle`.                          |
+| `eyebrow` (text)     | 12px / 16px        | 600         | 0.16em   | Small-caps labels above titles. Always uppercase (CSS-driven), `brass-ink` or `ink-muted`. |
+| `code-block` (mono)  | 14px / 24px        | 400         | 0em      | Code blocks on `code-ground`. 2-space tabs, ligatures on.                                  |
+| `code-inline` (mono) | 0.86em / 1         | 450         | 0em      | Inline code in prose, on `paper-sunken`, `radius-sm`. Relative sizing.                     |
+| `code-label` (mono)  | 12px / 16px        | 500         | 0.04em   | Filename tab / language chip above a code block.                                           |
 
 ## Space, layout, corners, shadows
 
@@ -122,10 +122,10 @@ Separate home sections with `space-9`, article blocks with `space-7`. Divide lis
 
 **Shadows** — warm-tinted (brown) in light, pure black in dark:
 
-| Token | Light | Dark | Usage |
-| --- | --- | --- | --- |
-| `shadow-sm` | `0 1px 2px rgba(60,44,20,.07), 0 1px 1px rgba(60,44,20,.04)` | `0 1px 2px rgba(0,0,0,.45), 0 1px 1px rgba(0,0,0,.3)` | Cards and inputs at rest. |
-| `shadow-md` | `0 8px 20px -6px rgba(60,44,20,.16), 0 2px 5px rgba(60,44,20,.06)` | `0 10px 24px -8px rgba(0,0,0,.6), 0 2px 6px rgba(0,0,0,.35)` | Card/button hover lift, dropdowns. |
+| Token       | Light                                                                 | Dark                                                          | Usage                                    |
+| ----------- | --------------------------------------------------------------------- | ------------------------------------------------------------- | ---------------------------------------- |
+| `shadow-sm` | `0 1px 2px rgba(60,44,20,.07), 0 1px 1px rgba(60,44,20,.04)`          | `0 1px 2px rgba(0,0,0,.45), 0 1px 1px rgba(0,0,0,.3)`         | Cards and inputs at rest.                |
+| `shadow-md` | `0 8px 20px -6px rgba(60,44,20,.16), 0 2px 5px rgba(60,44,20,.06)`    | `0 10px 24px -8px rgba(0,0,0,.6), 0 2px 6px rgba(0,0,0,.35)`  | Card/button hover lift, dropdowns.       |
 | `shadow-lg` | `0 28px 56px -16px rgba(60,44,20,.26), 0 8px 16px rgba(60,44,20,.07)` | `0 32px 64px -16px rgba(0,0,0,.7), 0 8px 18px rgba(0,0,0,.4)` | Modals, command palette, feature panels. |
 
 ## Motion
@@ -137,6 +137,7 @@ Motion should feel like good manners: quick to start, slow to settle, never in t
 **Easing**: `ease-glide` `cubic-bezier(0.22,1,0.36,1)` — default, fast start/long soft landing · `ease-settle` `cubic-bezier(0.65,0,0.35,1)` — symmetric, for things trading places (theme icons, nav indicator) · `ease-spring` `cubic-bezier(0.34,1.4,0.64,1)` — overshoot, confirmations only (the copied tick).
 
 **Rules**:
+
 - Move `transform` and `opacity`. Colour changes use `duration-fast` + `linear`. Never animate layout properties on scroll.
 - Hover is faster than its return: lift on `duration-base`, press on `duration-instant`.
 - Stagger entrances by 70ms per item (`--i` index), capped at six items. Entrance = fade + 14px rise over `duration-reveal`.
@@ -144,38 +145,52 @@ Motion should feel like good manners: quick to start, slow to settle, never in t
 
 **Interactions**:
 
-| Element | Motion | Tokens |
-| --- | --- | --- |
-| Text link | Brass rule at rest; evergreen rule draws left→right on hover; outbound arrow nudges 2px up-right | `duration-base`, `ease-glide` |
-| Primary button | Lifts 2px, shadow→`shadow-md`, inner keyline fades in 4px inside edge, arrow glides 4px | `duration-base`, `ease-glide` |
-| Secondary button | Lifts 2px, fills `paper-raised`, border darkens to `ink` | `duration-base` |
-| Any button, pressed | Scales to 0.985, lift removed | `duration-instant` |
-| Nav | 2px mark slides between links: `brass` while hovering, `brand` at current page | `duration-slow`, `ease-settle` |
-| Theme toggle | Sun/moon rotate 90°, scale from 0.5; colours cross-fade | `duration-slow`, `ease-settle` |
-| Post row | Wash→`paper-raised`, title rule draws, arrow slides in from 10px left | `duration-base`/`duration-slow` |
-| Post/project card | Lifts 4px, `shadow-md`, border→`brass` | `duration-base`, `ease-glide` |
-| Project arrow | Arrow exits up-right as twin enters bottom-left; disc fills `brand` | `duration-slow`, `ease-glide` |
-| Live status dot | Soft ring pulses every 2.8s | `ease-glide` |
-| Copy button | Copy icon shrinks out, check springs in, "Copied" shows 1.8s | `ease-spring` |
-| Page/section entrance | Fade + rise, staggered | `duration-reveal`, `ease-glide` |
-| Ornament | Rules grow outward from diamond | `duration-reveal` |
+| Element               | Motion                                                                                           | Tokens                          |
+| --------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------- |
+| Text link             | Brass rule at rest; evergreen rule draws left→right on hover; outbound arrow nudges 2px up-right | `duration-base`, `ease-glide`   |
+| Primary button        | Lifts 2px, shadow→`shadow-md`, inner keyline fades in 4px inside edge, arrow glides 4px          | `duration-base`, `ease-glide`   |
+| Secondary button      | Lifts 2px, fills `paper-raised`, border darkens to `ink`                                         | `duration-base`                 |
+| Any button, pressed   | Scales to 0.985, lift removed                                                                    | `duration-instant`              |
+| Nav                   | 2px mark slides between links: `brass` while hovering, `brand` at current page                   | `duration-slow`, `ease-settle`  |
+| Theme toggle          | Sun/moon rotate 90°, scale from 0.5; colours cross-fade                                          | `duration-slow`, `ease-settle`  |
+| Post row              | Wash→`paper-raised`, title rule draws, arrow slides in from 10px left                            | `duration-base`/`duration-slow` |
+| Post/project card     | Lifts 4px, `shadow-md`, border→`brass`                                                           | `duration-base`, `ease-glide`   |
+| Project arrow         | Arrow exits up-right as twin enters bottom-left; disc fills `brand`                              | `duration-slow`, `ease-glide`   |
+| Live status dot       | Soft ring pulses every 2.8s                                                                      | `ease-glide`                    |
+| Copy button           | Copy icon shrinks out, check springs in, "Copied" shows 1.8s                                     | `ease-spring`                   |
+| Page/section entrance | Fade + rise, staggered                                                                           | `duration-reveal`, `ease-glide` |
+| Ornament              | Rules grow outward from diamond                                                                  | `duration-reveal`               |
 
 **Recipes**:
 
 ```css
 /* Underline draw (links, titles) */
 .link {
-  background-image: linear-gradient(currentColor, currentColor);
-  background-repeat: no-repeat;
-  background-position: 0 100%;
-  background-size: 0% 1px;
-  transition: background-size var(--duration-base) var(--ease-glide);
+	background-image: linear-gradient(currentColor, currentColor);
+	background-repeat: no-repeat;
+	background-position: 0 100%;
+	background-size: 0% 1px;
+	transition: background-size var(--duration-base) var(--ease-glide);
 }
-.link:hover { background-size: 100% 1px; }
+.link:hover {
+	background-size: 100% 1px;
+}
 
 /* Entrance, staggered with --i */
-@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-.reveal { animation: rise var(--duration-reveal) var(--ease-glide) both; animation-delay: calc(var(--i, 0) * 70ms); }
+@keyframes rise {
+	from {
+		opacity: 0;
+		transform: translateY(14px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+.reveal {
+	animation: rise var(--duration-reveal) var(--ease-glide) both;
+	animation-delay: calc(var(--i, 0) * 70ms);
+}
 ```
 
 Theme cross-fade: add `mt-theme-fade` to `<html>` for 600ms around a `data-theme` change; every colour transitions together.
@@ -198,24 +213,24 @@ The wordmark is set in type, not a drawn mark: "Kyle" upright, "Monti" italic, b
 
 Reference implementations live in the artifact as `window.Monti`; port to TSX. Each gets a `ComponentNameProps` type per AGENTS.md.
 
-| Component | Key props | Notes |
-| --- | --- | --- |
-| **Button** | `variant` (primary fill / secondary outline / quiet underline text), `size` (sm 40px / md 48px / lg 56px), `arrow`, `icon`, `href`, `external` | One primary per view. Verb-first, sentence case. `on-brand` text on primary. |
-| **TextLink** | `href`, `external` | Inline link, brass rule at rest → evergreen on hover. Never remove the rule — it's what distinguishes it from `ink` text. Use `Button variant="quiet"` for standalone actions. |
-| **NavBar** | `items`, `current`, `sticky`, `onNavigate`, `homeHref` | Wordmark left, 3 links centre (Writing, Résumé, Workshop), theme toggle right. Sliding mark: `brass` on hover, `brand` at current page. `header-height` tall, `container-page` + gutters. Collapses to menu button <640px. |
-| **ThemeToggle** | `theme`, `onChange` | 40px round, sun/moon cross-fade. Once, far right of header. Persist via localStorage; set `data-theme` before first paint. |
-| **Wordmark** | `size` (sm 18px / md 24px / lg 40px), `href` | "Kyle" upright + "Monti" italic. Only logo — never draw a mark, never bold, never two lines. `md` header, `lg` footer, `sm` subdomain headers. |
-| **SectionHeading** | `eyebrow`, `title`, `action`, `actionHref`, `children` | Opens every home-page section. Follow with a hairline + content. |
-| **PostCard** | `title`, `excerpt`, `date`, `readingTime`, `tags`, `href`, `variant` (`row`/`card`) | Row: hairline, washes to `paper-raised` on hover. Card: lifts 4px, `brass` border. One link — never nest links inside. Max 3 tags. |
-| **ProjectCard** | `name`, `host`, `description`, `status` (Live/Beta/Idea), `tags`, `href`, `index` | Whole card is a link. Hover: lift, `brass` border, arrow-swap animation. Status word always shown beside its dot. 3-across grid ≥1024px. |
-| **Tag** | `tone` (`neutral` on `paper-sunken` / `brass` on `brass-tint`), `href` | Names things, never sentences. Neutral for topics/skills; brass for one "Featured" flag max. Max 3 per post. |
-| **Prose** | `dropCap`, `className` | MDX article column, `container-prose`. Styles plain `p/h2/h3/ul/ol/blockquote/hr/figure/code`. `dropCap` once per article, long essays only. |
-| **CodeBlock** | `code`, `lang`, `filename`, `highlight`, `lineNumbers` | `code-ground` fill, filename bar, copy button. Use Shiki + `rehype-pretty-code` mapped to `code-*` tokens in the real site (bundled highlighter is preview-only). Never scroll vertically — break the code instead. |
-| **Callout** | `kind` (`note` brand-tint / `tip` brass-tint / `caution` danger-tint), `title`, `children` | Label is always a word + diamond — never colour alone. Max 2 per article, 2 sentences each. |
-| **ResumeEntry** | `role`, `org`, `orgHref`, `period`, `location`, `summary`, `bullets`, `tags` | Dates/place left, role/employer/achievements right. Bullets: brass diamond, verb + outcome, max 3. Stacks <640px. No page-breaks when printed. |
-| **SiteFooter** | `nav`, `elsewhere`, `year` | Ornament, large wordmark + one-line tagline, two link columns, fine print naming the fonts. No newsletters/social feeds/fourth column. |
-| **Ornament** | — | Hairline + brass diamond. Once per page: between header block and content, and atop the footer. |
-| **Icon** | `name`, `size`, `title` | See allowed name list above. |
+| Component          | Key props                                                                                                                                      | Notes                                                                                                                                                                                                                      |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Button**         | `variant` (primary fill / secondary outline / quiet underline text), `size` (sm 40px / md 48px / lg 56px), `arrow`, `icon`, `href`, `external` | One primary per view. Verb-first, sentence case. `on-brand` text on primary.                                                                                                                                               |
+| **TextLink**       | `href`, `external`                                                                                                                             | Inline link, brass rule at rest → evergreen on hover. Never remove the rule — it's what distinguishes it from `ink` text. Use `Button variant="quiet"` for standalone actions.                                             |
+| **NavBar**         | `items`, `current`, `sticky`, `onNavigate`, `homeHref`                                                                                         | Wordmark left, 3 links centre (Writing, Résumé, Workshop), theme toggle right. Sliding mark: `brass` on hover, `brand` at current page. `header-height` tall, `container-page` + gutters. Collapses to menu button <640px. |
+| **ThemeToggle**    | `theme`, `onChange`                                                                                                                            | 40px round, sun/moon cross-fade. Once, far right of header. Persist via localStorage; set `data-theme` before first paint.                                                                                                 |
+| **Wordmark**       | `size` (sm 18px / md 24px / lg 40px), `href`                                                                                                   | "Kyle" upright + "Monti" italic. Only logo — never draw a mark, never bold, never two lines. `md` header, `lg` footer, `sm` subdomain headers.                                                                             |
+| **SectionHeading** | `eyebrow`, `title`, `action`, `actionHref`, `children`                                                                                         | Opens every home-page section. Follow with a hairline + content.                                                                                                                                                           |
+| **PostCard**       | `title`, `excerpt`, `date`, `readingTime`, `tags`, `href`, `variant` (`row`/`card`)                                                            | Row: hairline, washes to `paper-raised` on hover. Card: lifts 4px, `brass` border. One link — never nest links inside. Max 3 tags.                                                                                         |
+| **ProjectCard**    | `name`, `host`, `description`, `status` (Live/Beta/Idea), `tags`, `href`, `index`                                                              | Whole card is a link. Hover: lift, `brass` border, arrow-swap animation. Status word always shown beside its dot. 3-across grid ≥1024px.                                                                                   |
+| **Tag**            | `tone` (`neutral` on `paper-sunken` / `brass` on `brass-tint`), `href`                                                                         | Names things, never sentences. Neutral for topics/skills; brass for one "Featured" flag max. Max 3 per post.                                                                                                               |
+| **Prose**          | `dropCap`, `className`                                                                                                                         | MDX article column, `container-prose`. Styles plain `p/h2/h3/ul/ol/blockquote/hr/figure/code`. `dropCap` once per article, long essays only.                                                                               |
+| **CodeBlock**      | `code`, `lang`, `filename`, `highlight`, `lineNumbers`                                                                                         | `code-ground` fill, filename bar, copy button. Use Shiki + `rehype-pretty-code` mapped to `code-*` tokens in the real site (bundled highlighter is preview-only). Never scroll vertically — break the code instead.        |
+| **Callout**        | `kind` (`note` brand-tint / `tip` brass-tint / `caution` danger-tint), `title`, `children`                                                     | Label is always a word + diamond — never colour alone. Max 2 per article, 2 sentences each.                                                                                                                                |
+| **ResumeEntry**    | `role`, `org`, `orgHref`, `period`, `location`, `summary`, `bullets`, `tags`                                                                   | Dates/place left, role/employer/achievements right. Bullets: brass diamond, verb + outcome, max 3. Stacks <640px. No page-breaks when printed.                                                                             |
+| **SiteFooter**     | `nav`, `elsewhere`, `year`                                                                                                                     | Ornament, large wordmark + one-line tagline, two link columns, fine print naming the fonts. No newsletters/social feeds/fourth column.                                                                                     |
+| **Ornament**       | —                                                                                                                                              | Hairline + brass diamond. Once per page: between header block and content, and atop the footer.                                                                                                                            |
+| **Icon**           | `name`, `size`, `title`                                                                                                                        | See allowed name list above.                                                                                                                                                                                               |
 
 ## Code and prose (articles)
 
@@ -229,26 +244,26 @@ Reference implementations live in the artifact as `window.Monti`; port to TSX. E
 
 Syntax highlighter token map (Shiki + `rehype-pretty-code`, light values since code stays dark in both themes):
 
-| Token | TextMate scopes |
-| --- | --- |
-| `code-ink` | `source`, `variable` |
-| `code-comment` | `comment` (italic) |
-| `code-keyword` | `keyword`, `storage`, `keyword.control` |
-| `code-string` | `string`, `string.template` |
-| `code-number` | `constant.numeric`, `constant.language` |
-| `code-function` | `entity.name.function`, `support.function` |
-| `code-type` | `entity.name.type`, `entity.name.tag`, `support.class` |
-| `code-punctuation` | `punctuation`, `keyword.operator` |
+| Token              | TextMate scopes                                        |
+| ------------------ | ------------------------------------------------------ |
+| `code-ink`         | `source`, `variable`                                   |
+| `code-comment`     | `comment` (italic)                                     |
+| `code-keyword`     | `keyword`, `storage`, `keyword.control`                |
+| `code-string`      | `string`, `string.template`                            |
+| `code-number`      | `constant.numeric`, `constant.language`                |
+| `code-function`    | `entity.name.function`, `support.function`             |
+| `code-type`        | `entity.name.type`, `entity.name.tag`, `support.class` |
+| `code-punctuation` | `punctuation`, `keyword.operator`                      |
 
 ## Site structure
 
-| Route | Purpose | Built from |
-| --- | --- | --- |
-| `/` | Introduce, then surface writing and the workshop | `NavBar`, hero (`display-2xl`, two `Button`s, the arch), `SectionHeading` + `PostCard` rows, `SectionHeading` + `ProjectCard` grid, `SiteFooter` |
-| `/blog` | Every essay, newest first | `display-xl` title, `PostCard` rows grouped by year with `eyebrow` year headings |
-| `/blog/[slug]` | One essay | `Prose`, `CodeBlock`, `Callout`, tags, previous/next as two `PostCard` cards |
-| `/resume` | Printable résumé | `display-lg` name, `ResumeEntry` list, toolkit as `Tag`s, "Download PDF" `Button` |
-| `/workshop` | Side-project index | `display-xl` title, `ProjectCard` grid, 3-across ≥1024px |
+| Route          | Purpose                                          | Built from                                                                                                                                       |
+| -------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `/`            | Introduce, then surface writing and the workshop | `NavBar`, hero (`display-2xl`, two `Button`s, the arch), `SectionHeading` + `PostCard` rows, `SectionHeading` + `ProjectCard` grid, `SiteFooter` |
+| `/blog`        | Every essay, newest first                        | `display-xl` title, `PostCard` rows grouped by year with `eyebrow` year headings                                                                 |
+| `/blog/[slug]` | One essay                                        | `Prose`, `CodeBlock`, `Callout`, tags, previous/next as two `PostCard` cards                                                                     |
+| `/resume`      | Printable résumé                                 | `display-lg` name, `ResumeEntry` list, toolkit as `Tag`s, "Download PDF" `Button`                                                                |
+| `/workshop`    | Side-project index                               | `display-xl` title, `ProjectCard` grid, 3-across ≥1024px                                                                                         |
 
 Home hero: eyebrow → headline → one paragraph (≤2 sentences) → primary + secondary button. Arch sits right at 340×440, disappears <768px. Sections after the hero repeat: `SectionHeading` → hairline → content → `space-9`.
 
@@ -275,11 +290,25 @@ Static export (`output: 'export'` in `next.config`), no runtime server — motio
 **Fonts** — `next/font/google`, exposed as CSS variables, all three on `<html>`:
 
 ```ts
-import { Fraunces, Newsreader, JetBrains_Mono } from 'next/font/google';
+import { Fraunces, Newsreader, JetBrains_Mono } from "next/font/google"
 
-export const fraunces = Fraunces({ subsets: ['latin'], axes: ['opsz', 'SOFT'], style: ['normal', 'italic'], variable: '--font-fraunces' });
-export const newsreader = Newsreader({ subsets: ['latin'], axes: ['opsz'], style: ['normal', 'italic'], variable: '--font-newsreader' });
-export const jetbrains = JetBrains_Mono({ subsets: ['latin'], style: ['normal', 'italic'], variable: '--font-jetbrains' });
+export const fraunces = Fraunces({
+	subsets: ["latin"],
+	axes: ["opsz", "SOFT"],
+	style: ["normal", "italic"],
+	variable: "--font-fraunces",
+})
+export const newsreader = Newsreader({
+	subsets: ["latin"],
+	axes: ["opsz"],
+	style: ["normal", "italic"],
+	variable: "--font-newsreader",
+})
+export const jetbrains = JetBrains_Mono({
+	subsets: ["latin"],
+	style: ["normal", "italic"],
+	variable: "--font-jetbrains",
+})
 ```
 
 Set `font-variation-settings: "SOFT" 30, "WONK" 0` on every display/heading class.
@@ -292,30 +321,30 @@ Set `font-variation-settings: "SOFT" 30, "WONK" 0` on every display/heading clas
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 @theme inline {
-  --color-paper: var(--paper);
-  --color-paper-raised: var(--paper-raised);
-  --color-paper-sunken: var(--paper-sunken);
-  --color-ink: var(--ink);
-  --color-ink-muted: var(--ink-muted);
-  --color-ink-subtle: var(--ink-subtle);
-  --color-hairline: var(--hairline);
-  --color-border-strong: var(--border-strong);
-  --color-brand: var(--brand);
-  --color-brand-hover: var(--brand-hover);
-  --color-on-brand: var(--on-brand);
-  --color-brand-tint: var(--brand-tint);
-  --color-brass: var(--brass);
-  --color-brass-ink: var(--brass-ink);
-  --color-brass-tint: var(--brass-tint);
-  --color-danger: var(--danger);
-  --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
-  --font-text: var(--font-newsreader), "Iowan Old Style", Georgia, serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, Menlo, monospace;
-  --radius-md: var(--radius-md);
-  --radius-lg: var(--radius-lg);
-  --shadow-sm: var(--shadow-sm);
-  --shadow-md: var(--shadow-md);
-  --ease-glide: var(--ease-glide);
+	--color-paper: var(--paper);
+	--color-paper-raised: var(--paper-raised);
+	--color-paper-sunken: var(--paper-sunken);
+	--color-ink: var(--ink);
+	--color-ink-muted: var(--ink-muted);
+	--color-ink-subtle: var(--ink-subtle);
+	--color-hairline: var(--hairline);
+	--color-border-strong: var(--border-strong);
+	--color-brand: var(--brand);
+	--color-brand-hover: var(--brand-hover);
+	--color-on-brand: var(--on-brand);
+	--color-brand-tint: var(--brand-tint);
+	--color-brass: var(--brass);
+	--color-brass-ink: var(--brass-ink);
+	--color-brass-tint: var(--brass-tint);
+	--color-danger: var(--danger);
+	--font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
+	--font-text: var(--font-newsreader), "Iowan Old Style", Georgia, serif;
+	--font-mono: var(--font-jetbrains), ui-monospace, Menlo, monospace;
+	--radius-md: var(--radius-md);
+	--radius-lg: var(--radius-lg);
+	--shadow-sm: var(--shadow-sm);
+	--shadow-md: var(--shadow-md);
+	--ease-glide: var(--ease-glide);
 }
 ```
 
