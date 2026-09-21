@@ -1,0 +1,19 @@
+{
+	"bracketSpacing": true,
+	"semi": false,
+	"experimentalOperatorPosition": "end",
+	"experimentalTernaries": true,
+	"singleQuote": false,
+	"jsxSingleQuote": true,
+	"quoteProps": "as-needed",
+	"trailingComma": "all",
+	"htmlWhitespaceSensitivity": "css",
+	"proseWrap": "preserve",
+	"endOfLine": "lf",
+	"insertPragma": false,
+	"printWidth": 120,
+	"requirePragma": false,
+	"tabWidth": 2,
+	"useTabs": true,
+	"embeddedLanguageFormatting": "auto"
+}
