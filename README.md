@@ -24,6 +24,10 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 
 This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Analytics and error tracking
+
+[PostHog](https://posthog.com) is wired up in `src/instrumentation-client.ts` for pageview analytics and client-side error tracking. Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_POSTHOG_KEY` to your project API key to enable it; without a key, PostHog stays disabled (e.g. local development). Because this site is a static export, PostHog config is baked in at `next build` time, so the env var must be set wherever the build runs (CI/deploy), not just at runtime.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
