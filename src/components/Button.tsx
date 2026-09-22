@@ -65,6 +65,7 @@ type ButtonAsButtonProps = ButtonSharedProps & {
 	external?: undefined
 	type?: "button" | "submit" | "reset"
 	disabled?: boolean
+	onClick?: () => void
 }
 
 type ButtonProps = ButtonAsLinkProps | ButtonAsButtonProps
@@ -135,10 +136,10 @@ function Button(props: ButtonProps) {
 		)
 	}
 
-	const { type = "button", disabled } = props
+	const { type = "button", disabled, onClick } = props
 
 	return (
-		<button type={type} disabled={disabled} className={classes}>
+		<button type={type} disabled={disabled} onClick={onClick} className={classes}>
 			{content}
 		</button>
 	)

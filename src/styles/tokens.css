@@ -476,6 +476,24 @@
 	}
 }
 
+/* The résumé prints white regardless of the visitor's theme — see DESIGN.md → Print. */
+@media print {
+	:root,
+	:root[data-theme="dark"] {
+		--paper: #f6f1e7;
+		--paper-raised: #fbf8f1;
+		--paper-sunken: #ede5d5;
+		--ink: #1c1914;
+		--ink-muted: #57503f;
+		--ink-subtle: #6b6450;
+		--hairline: #dcd2bd;
+		--border-strong: #8b805f;
+		--brand: #1e4636;
+		--brass: #a37628;
+		--brass-ink: #77500f;
+	}
+}
+
 /* Around a theme change, cross-fade every colour together instead of snapping. */
 .mt-theme-fade,
 .mt-theme-fade * {

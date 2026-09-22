@@ -1,5 +1,7 @@
 import TagList from "~/components/TagList"
-import TextLink from "~/components/TextLink"
+import Paragraph from "./ui/paragraph"
+import Heading from "./ui/heading"
+import Button from "./Button"
 
 interface ResumeEntryProps {
 	role: string
@@ -26,22 +28,23 @@ function ResumeEntry(props: ResumeEntryProps) {
 	return (
 		<div className='flex flex-col gap-4 border-b border-hairline py-8 break-inside-avoid sm:flex-row sm:gap-8'>
 			<div className='flex shrink-0 flex-col gap-1 sm:w-40'>
-				<p className='font-text text-caption text-ink-subtle'>{period}</p>
-				{location && <p className='font-text text-caption text-ink-subtle'>{location}</p>}
+				<Paragraph variant='eyebrow'>{period}</Paragraph>
+
+				{location && <Paragraph variant='caption'>{location}</Paragraph>}
 			</div>
 			<div className='flex flex-1 flex-col gap-3'>
 				<div>
-					<h3 className='font-display text-heading-3 text-ink'>{role}</h3>
-					<p className='font-text text-body text-ink-muted'>
+					<Heading size='lg'>{role}</Heading>
+					<Paragraph variant='muted'>
 						{orgHref === undefined ?
 							org
-						:	<TextLink href={orgHref} external>
+						:	<Button href={orgHref} variant={"quiet"} arrow external>
 								{org}
-							</TextLink>
+							</Button>
 						}
-					</p>
+					</Paragraph>
 				</div>
-				{summary !== undefined && <p className='font-text text-body text-ink-muted'>{summary}</p>}
+				{summary !== undefined && <Paragraph variant='muted'>{summary}</Paragraph>}
 				{shownBullets.length > 0 && (
 					<ul className='flex flex-col gap-2'>
 						{shownBullets.map((bullet) => (

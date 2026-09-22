@@ -8,18 +8,8 @@ import SectionHeading from "~/components/SectionHeading"
 import SiteFooter from "~/components/SiteFooter"
 import Heading from "~/components/ui/heading"
 import Paragraph from "~/components/ui/paragraph"
+import { FOOTER_ELSEWHERE, NAV_ITEMS } from "~/shared/navigation"
 import { SITE_NAME, SITE_OG_IMAGE_PATH, SITE_URL } from "~/shared/site"
-
-const NAV_ITEMS = [
-	{ label: "Writing", href: "/blog" },
-	{ label: "Résumé", href: "/resume" },
-	{ label: "Workshop", href: "/workshop" },
-]
-
-const FOOTER_ELSEWHERE = [
-	{ label: "GitHub", href: "https://github.com" },
-	{ label: "LinkedIn", href: "https://linkedin.com" },
-]
 
 // Placeholder content — replace once the blog and workshop have real data.
 const RECENT_POSTS = [
