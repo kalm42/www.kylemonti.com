@@ -225,7 +225,7 @@ Reference implementations live in the artifact as `window.Monti`; port to TSX. E
 | **ProjectCard**    | `name`, `host`, `description`, `status` (Live/Beta/Idea), `tags`, `href`, `index`                                                              | Whole card is a link. Hover: lift, `brass` border, arrow-swap animation. Status word always shown beside its dot. 3-across grid ≥1024px.                                                                                   |
 | **Tag**            | `tone` (`neutral` on `paper-sunken` / `brass` on `brass-tint`), `href`                                                                         | Names things, never sentences. Neutral for topics/skills; brass for one "Featured" flag max. Max 3 per post.                                                                                                               |
 | **Prose**          | `dropCap`, `className`                                                                                                                         | MDX article column, `container-prose`. Styles plain `p/h2/h3/ul/ol/blockquote/hr/figure/code`. `dropCap` once per article, long essays only.                                                                               |
-| **CodeBlock**      | `code`, `lang`, `filename`, `highlight`, `lineNumbers`                                                                                         | `code-ground` fill, filename bar, copy button. Use Shiki + `rehype-pretty-code` mapped to `code-*` tokens in the real site (bundled highlighter is preview-only). Never scroll vertically — break the code instead.        |
+| **CodeBlock**      | `code`, `lang`, `filename`, `highlight`, `lineNumbers`                                                                                         | `code-ground` fill, filename bar, copy button. Highlighted with TanStack Highlight (`th-*` semantic classes mapped to `code-*` tokens, see `src/styles/code-theme.css`). Never scroll vertically — break the code instead. |
 | **Callout**        | `kind` (`note` brand-tint / `tip` brass-tint / `caution` danger-tint), `title`, `children`                                                     | Label is always a word + diamond — never colour alone. Max 2 per article, 2 sentences each.                                                                                                                                |
 | **ResumeEntry**    | `role`, `org`, `orgHref`, `period`, `location`, `summary`, `bullets`, `tags`                                                                   | Dates/place left, role/employer/achievements right. Bullets: brass diamond, verb + outcome, max 3. Stacks <640px. No page-breaks when printed.                                                                             |
 | **SiteFooter**     | `nav`, `elsewhere`, `year`                                                                                                                     | Ornament, large wordmark + one-line tagline, two link columns, fine print naming the fonts. No newsletters/social feeds/fourth column.                                                                                     |
@@ -242,18 +242,18 @@ Reference implementations live in the artifact as `window.Monti`; port to TSX. E
 - Figures fill the column at `radius-lg`; captions `caption` in `ink-subtle`, centred.
 - Code blocks: always a filename for real files, highlight ≤3 lines, never vertical scroll (horizontal only), show line numbers only when prose refers to them. Inline code for identifiers/values only, never whole sentences.
 
-Syntax highlighter token map (Shiki + `rehype-pretty-code`, light values since code stays dark in both themes):
+Syntax highlighter token map (TanStack Highlight, light values since code stays dark in both themes). Every classified span gets `th-token` plus one semantic class below; anything unclassified (`th-variable`, `th-code-inline`, `th-heading`, `th-link`, `th-meta`, `th-deleted`, `th-inserted`) inherits `code-ink` from `.th-code` rather than being restated:
 
-| Token              | TextMate scopes                                        |
-| ------------------ | ------------------------------------------------------ |
-| `code-ink`         | `source`, `variable`                                   |
-| `code-comment`     | `comment` (italic)                                     |
-| `code-keyword`     | `keyword`, `storage`, `keyword.control`                |
-| `code-string`      | `string`, `string.template`                            |
-| `code-number`      | `constant.numeric`, `constant.language`                |
-| `code-function`    | `entity.name.function`, `support.function`             |
-| `code-type`        | `entity.name.type`, `entity.name.tag`, `support.class` |
-| `code-punctuation` | `punctuation`, `keyword.operator`                      |
+| Token              | TanStack Highlight classes (`th-*`)      |
+| ------------------ | ----------------------------------------- |
+| `code-ink`         | default (inherited from `.th-code`)       |
+| `code-comment`     | `comment` (italic)                        |
+| `code-keyword`     | `keyword`, `command`                      |
+| `code-string`      | `string`                                  |
+| `code-number`      | `number`, `literal`                       |
+| `code-function`    | `function`                                |
+| `code-type`        | `type`, `tag`                             |
+| `code-punctuation` | `operator`, `property`, `attr`, `selector` |
 
 ## Site structure
 
@@ -350,7 +350,7 @@ Set `font-variation-settings: "SOFT" 30, "WONK" 0` on every display/heading clas
 
 **Theme switching**: set `data-theme` on `<html>` before first paint via an inline script reading `localStorage`, falling back to `prefers-color-scheme`, so a dark visitor never sees an ivory flash. `ThemeToggle` writes the choice back and adds `mt-theme-fade` for 600ms around the change.
 
-**Blog**: MDX → `Prose`, highlighted with `rehype-pretty-code` using the token-mapped theme above. `generateStaticParams` for every route. Emit RSS at build time (footer/header `rss` icon links to it).
+**Blog**: MDX → `Prose`, parsed with TanStack Markdown and highlighted with TanStack Highlight using the token-mapped theme above (`CodeBlock` calls the shared `src/shared/highlighter.ts` instance directly — synchronous, no build-time rehype pass required). `generateStaticParams` for every route. Emit RSS at build time (footer/header `rss` icon links to it).
 
 **Rule of one place**: keep design values in `tokens.css`, the `@theme` block, and a `components/` folder of ported TSX components. Never restate a colour, radius, or duration as a literal elsewhere.
 

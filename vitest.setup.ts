@@ -8,7 +8,7 @@ import { server } from "~/mocks/node"
 // Vitest, so stub it out with the shape components expect.
 vi.mock("next/font/google", () => {
 	const font = () => ({ className: "", variable: "", style: {} })
-	return { Fraunces: font, Public_Sans: font }
+	return { Fraunces: font, Newsreader: font, JetBrains_Mono: font }
 })
 
 beforeAll(() => {
