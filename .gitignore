@@ -21,6 +21,9 @@
 /.next/
 /out/
 
+# generated at build time — see scripts/generate-rss.mjs
+/public/rss.xml
+
 # production
 /build
 

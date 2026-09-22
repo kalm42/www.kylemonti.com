@@ -9,6 +9,7 @@ const paragraphVariants = cva("", {
 			muted: "font-text text-body text-ink-muted",
 			eyebrow: "font-text text-eyebrow uppercase text-brass-ink whitespace-nowrap",
 			caption: "font-text text-caption text-ink-subtle",
+			lede: "font-text text-lede text-ink italic",
 		},
 	},
 	compoundVariants: [{ variant: ["default", "excerpt", "muted"], className: "font-text" }],

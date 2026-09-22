@@ -4,6 +4,7 @@ import Wordmark from "~/components/Wordmark"
 import Paragraph from "./ui/paragraph"
 import Heading from "./ui/heading"
 import Button from "./Button"
+import Icon from "./Icon"
 
 interface SiteFooterProps {
 	nav: NavItem[]
@@ -62,9 +63,18 @@ function SiteFooter(props: SiteFooterProps) {
 					<FooterColumn title='Site' items={nav} />
 					<FooterColumn title='Elsewhere' items={elsewhere} external={true} />
 				</div>
-				<p className='font-text text-caption text-ink-subtle'>
-					© {year} Kyle Monti. Set in Fraunces, Newsreader and JetBrains Mono.
-				</p>
+				<div className='flex flex-wrap items-center justify-between gap-4'>
+					<p className='font-text text-caption text-ink-subtle'>
+						© {year} Kyle Monti. Set in Fraunces, Newsreader and JetBrains Mono.
+					</p>
+					<a
+						href='/rss.xml'
+						className='inline-flex items-center gap-2 font-text text-caption text-ink-subtle transition-colors duration-fast hover:text-ink'
+					>
+						<Icon name='rss' size={16} />
+						RSS
+					</a>
+				</div>
 			</div>
 		</footer>
 	)

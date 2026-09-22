@@ -1,58 +1,31 @@
+import type { GetStaticProps } from "next"
 import Head from "next/head"
 import Arch from "~/components/Arch"
 import Button from "~/components/Button"
 import NavBar from "~/components/NavBar"
 import PostCard from "~/components/PostCard"
-import ProjectCard, { type ProjectCardProps } from "~/components/ProjectCard"
+import ProjectCard from "~/components/ProjectCard"
 import SectionHeading from "~/components/SectionHeading"
 import SiteFooter from "~/components/SiteFooter"
 import Heading from "~/components/ui/heading"
 import Paragraph from "~/components/ui/paragraph"
+import { getAllPosts, type Post } from "~/shared/blog"
+import { formatDateShort } from "~/shared/date"
 import { FOOTER_ELSEWHERE, NAV_ITEMS } from "~/shared/navigation"
+import { PROJECTS } from "~/shared/projects"
 import { SITE_NAME, SITE_OG_IMAGE_PATH, SITE_URL } from "~/shared/site"
-
-// Placeholder content — replace once the blog and workshop have real data.
-const RECENT_POSTS = [
-	{
-		title: "Designing a calmer date picker",
-		excerpt: "A short note on why I stopped memoizing everything and started measuring first.",
-		date: "14 Mar 2026",
-		readingTime: "6 min read",
-		tags: ["React", "Design"],
-		href: "/blog/designing-a-calmer-date-picker",
-	},
-	{
-		title: "Why springs feel right",
-		excerpt: "The physics behind interfaces that feel unhurried, and where a linear curve still wins.",
-		date: "2 Feb 2026",
-		readingTime: "8 min read",
-		tags: ["Motion"],
-		href: "/blog/why-springs-feel-right",
-	},
-]
-
-type Project = Omit<ProjectCardProps, "index">
-
-const PROJECTS: Project[] = [
-	{
-		name: "Tallyho",
-		host: "tallyho.kylemonti.com",
-		description: "A small scorekeeper for tabletop games, built to work offline.",
-		status: "Live",
-		href: "https://tallyho.kylemonti.com",
-	},
-	{
-		name: "Gridwork",
-		host: "gridwork.kylemonti.com",
-		description: "A layout playground for CSS grid, with shareable presets.",
-		status: "Beta",
-		href: "https://gridwork.kylemonti.com",
-	},
-]
 
 const DESCRIPTION = "I build front-ends that feel unhurried. Writing, a résumé, and a workshop of small useful things."
 
-export default function Home() {
+const RECENT_POST_COUNT = 2
+
+interface HomeProps {
+	recentPosts: Post[]
+}
+
+export default function Home(props: HomeProps) {
+	const { recentPosts } = props
+
 	return (
 		<>
 			<Head>
@@ -95,8 +68,16 @@ export default function Home() {
 				<section className='mx-auto flex w-full max-w-page flex-col gap-6 px-gutter py-9 md:px-gutter-wide'>
 					<SectionHeading eyebrow='Writing' title='Latest writing' action='All essays' actionHref='/blog' />
 					<div className='flex flex-col'>
-						{RECENT_POSTS.map((post) => (
-							<PostCard key={post.href} {...post} />
+						{recentPosts.map((post) => (
+							<PostCard
+								key={post.slug}
+								title={post.title}
+								excerpt={post.excerpt}
+								date={formatDateShort(post.date)}
+								readingTime={post.readingTime}
+								tags={post.tags}
+								href={`/blog/${post.slug}`}
+							/>
 						))}
 					</div>
 				</section>
@@ -108,7 +89,7 @@ export default function Home() {
 						action='Open the workshop'
 						actionHref='/workshop'
 					>
-						Side projects, each on its own subdomain, each as small as it needs to be.
+						Side projects, each on its own address, each as small as it needs to be.
 					</SectionHeading>
 					<div className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
 						{PROJECTS.map((project, index) => (
@@ -121,4 +102,8 @@ export default function Home() {
 			<SiteFooter nav={NAV_ITEMS} elsewhere={FOOTER_ELSEWHERE} year={new Date().getFullYear()} />
 		</>
 	)
+}
+
+export const getStaticProps: GetStaticProps<HomeProps> = () => {
+	return { props: { recentPosts: getAllPosts().slice(0, RECENT_POST_COUNT) } }
 }
