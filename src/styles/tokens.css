@@ -1,0 +1,487 @@
+/**
+ * Design tokens — see /DESIGN.md for the full reference. Every value here
+ * must match DESIGN.md exactly.
+ *
+ * Each token below is registered with @property so the browser enforces
+ * its type: assigning an invalid value (e.g. a length to --brand) is
+ * rejected at parse time and falls back to initial-value, instead of
+ * silently propagating through var(). --ease-* and the --shadow-* tokens
+ * are exempt — the CSS Properties and Values API has no <easing-function>
+ * or <shadow> syntax component to register them against.
+ */
+
+/* Colour — see DESIGN.md → Colour → Tokens. */
+
+@property --paper {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #f6f1e7;
+}
+
+@property --paper-raised {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #fbf8f1;
+}
+
+@property --paper-sunken {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #ede5d5;
+}
+
+@property --ink {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #1c1914;
+}
+
+@property --ink-muted {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #57503f;
+}
+
+@property --ink-subtle {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #6b6450;
+}
+
+@property --hairline {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #dcd2bd;
+}
+
+@property --border-strong {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #8b805f;
+}
+
+@property --brand {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #1e4636;
+}
+
+@property --brand-hover {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #143427;
+}
+
+@property --on-brand {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #f6f1e7;
+}
+
+@property --brand-tint {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #dfe8dd;
+}
+
+@property --brass {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #a37628;
+}
+
+@property --brass-ink {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #77500f;
+}
+
+@property --brass-tint {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #eddcb4;
+}
+
+@property --danger {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #8a2b34;
+}
+
+@property --danger-tint {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #f1d9d6;
+}
+
+@property --focus-ring {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #1e4636;
+}
+
+@property --code-ground {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #12201a;
+}
+
+@property --code-ink {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #ece5d3;
+}
+
+@property --code-comment {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #8fa094;
+}
+
+@property --code-keyword {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #e0b866;
+}
+
+@property --code-string {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #a3d6b8;
+}
+
+@property --code-number {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #eba080;
+}
+
+@property --code-function {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #f3dfa8;
+}
+
+@property --code-type {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #dfa9b3;
+}
+
+@property --code-punctuation {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #a9b3a8;
+}
+
+@property --code-line {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #1d2f26;
+}
+
+@property --code-border {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: #2d4237;
+}
+
+/* Motion — see DESIGN.md → Motion. */
+
+@property --duration-instant {
+	syntax: "<time>";
+	inherits: true;
+	initial-value: 90ms;
+}
+
+@property --duration-fast {
+	syntax: "<time>";
+	inherits: true;
+	initial-value: 160ms;
+}
+
+@property --duration-base {
+	syntax: "<time>";
+	inherits: true;
+	initial-value: 280ms;
+}
+
+@property --duration-slow {
+	syntax: "<time>";
+	inherits: true;
+	initial-value: 480ms;
+}
+
+@property --duration-reveal {
+	syntax: "<time>";
+	inherits: true;
+	initial-value: 800ms;
+}
+
+@property --scale-press {
+	syntax: "<percentage>";
+	inherits: true;
+	initial-value: 98.5%;
+}
+
+/* Space, layout, corners — see DESIGN.md → Space, layout, corners, shadows. */
+
+@property --space-1 {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 4px;
+}
+
+@property --space-2 {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 8px;
+}
+
+@property --space-3 {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 12px;
+}
+
+@property --space-4 {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 16px;
+}
+
+@property --space-5 {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 24px;
+}
+
+@property --space-6 {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 32px;
+}
+
+@property --space-7 {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 48px;
+}
+
+@property --space-8 {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 64px;
+}
+
+@property --space-9 {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 96px;
+}
+
+@property --space-10 {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 128px;
+}
+
+@property --container-prose {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 42rem;
+}
+
+@property --container-page {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 72rem;
+}
+
+@property --gutter {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 24px;
+}
+
+@property --gutter-wide {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 48px;
+}
+
+@property --header-height {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 72px;
+}
+
+@property --radius-sm {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 4px;
+}
+
+@property --radius-md {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 8px;
+}
+
+@property --radius-lg {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 14px;
+}
+
+@property --radius-xl {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 24px;
+}
+
+@property --radius-pill {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 999px;
+}
+
+:root {
+	--paper: #f6f1e7;
+	--paper-raised: #fbf8f1;
+	--paper-sunken: #ede5d5;
+	--ink: #1c1914;
+	--ink-muted: #57503f;
+	--ink-subtle: #6b6450;
+	--hairline: #dcd2bd;
+	--border-strong: #8b805f;
+	--brand: #1e4636;
+	--brand-hover: #143427;
+	--on-brand: #f6f1e7;
+	--brand-tint: #dfe8dd;
+	--brass: #a37628;
+	--brass-ink: #77500f;
+	--brass-tint: #eddcb4;
+	--danger: #8a2b34;
+	--danger-tint: #f1d9d6;
+	--focus-ring: #1e4636;
+
+	--code-ground: #12201a;
+	--code-ink: #ece5d3;
+	--code-comment: #8fa094;
+	--code-keyword: #e0b866;
+	--code-string: #a3d6b8;
+	--code-number: #eba080;
+	--code-function: #f3dfa8;
+	--code-type: #dfa9b3;
+	--code-punctuation: #a9b3a8;
+	--code-line: #1d2f26;
+	--code-border: #2d4237;
+
+	--duration-instant: 90ms;
+	--duration-fast: 160ms;
+	--duration-base: 280ms;
+	--duration-slow: 480ms;
+	--duration-reveal: 800ms;
+	--ease-glide: cubic-bezier(0.22, 1, 0.36, 1);
+	--ease-settle: cubic-bezier(0.65, 0, 0.35, 1);
+	--ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+	--scale-press: 98.5%;
+
+	--space-1: 4px;
+	--space-2: 8px;
+	--space-3: 12px;
+	--space-4: 16px;
+	--space-5: 24px;
+	--space-6: 32px;
+	--space-7: 48px;
+	--space-8: 64px;
+	--space-9: 96px;
+	--space-10: 128px;
+
+	--container-prose: 42rem;
+	--container-page: 72rem;
+	--gutter: 24px;
+	--gutter-wide: 48px;
+	--header-height: 72px;
+
+	--radius-sm: 4px;
+	--radius-md: 8px;
+	--radius-lg: 14px;
+	--radius-xl: 24px;
+	--radius-pill: 999px;
+
+	/* Shadows are warm-tinted (brown) in light, pure black in dark — see the dark-theme blocks below. */
+	--shadow-sm: 0 1px 2px rgba(60, 44, 20, 0.07), 0 1px 1px rgba(60, 44, 20, 0.04);
+	--shadow-md: 0 8px 20px -6px rgba(60, 44, 20, 0.16), 0 2px 5px rgba(60, 44, 20, 0.06);
+	--shadow-lg: 0 28px 56px -16px rgba(60, 44, 20, 0.26), 0 8px 16px rgba(60, 44, 20, 0.07);
+}
+
+:root[data-theme="dark"] {
+	--paper: #0f1813;
+	--paper-raised: #16221b;
+	--paper-sunken: #0a110d;
+	--ink: #f0eadb;
+	--ink-muted: #bdb49e;
+	--ink-subtle: #9a927e;
+	--hairline: #2a3a31;
+	--border-strong: #6a7d70;
+	--brand: #9dcdb3;
+	--brand-hover: #b9e0c9;
+	--on-brand: #0c1510;
+	--brand-tint: #1c3226;
+	--brass: #d3a955;
+	--brass-ink: #dcb872;
+	--brass-tint: #3a3018;
+	--danger: #f0a3a6;
+	--danger-tint: #3a1d20;
+	--focus-ring: #b9e0c9;
+
+	--code-ground: #0a120e;
+	--code-line: #15231b;
+
+	--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45), 0 1px 1px rgba(0, 0, 0, 0.3);
+	--shadow-md: 0 10px 24px -8px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.35);
+	--shadow-lg: 0 32px 64px -16px rgba(0, 0, 0, 0.7), 0 8px 18px rgba(0, 0, 0, 0.4);
+}
+
+/* Before the theme script has run (no-JS, or the first frame), fall back to the system preference. */
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme="light"]):not([data-theme="dark"]) {
+		--paper: #0f1813;
+		--paper-raised: #16221b;
+		--paper-sunken: #0a110d;
+		--ink: #f0eadb;
+		--ink-muted: #bdb49e;
+		--ink-subtle: #9a927e;
+		--hairline: #2a3a31;
+		--border-strong: #6a7d70;
+		--brand: #9dcdb3;
+		--brand-hover: #b9e0c9;
+		--on-brand: #0c1510;
+		--brand-tint: #1c3226;
+		--brass: #d3a955;
+		--brass-ink: #dcb872;
+		--brass-tint: #3a3018;
+		--danger: #f0a3a6;
+		--danger-tint: #3a1d20;
+		--focus-ring: #b9e0c9;
+
+		--code-ground: #0a120e;
+		--code-line: #15231b;
+
+		--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45), 0 1px 1px rgba(0, 0, 0, 0.3);
+		--shadow-md: 0 10px 24px -8px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.35);
+		--shadow-lg: 0 32px 64px -16px rgba(0, 0, 0, 0.7), 0 8px 18px rgba(0, 0, 0, 0.4);
+	}
+}
+
+/* Around a theme change, cross-fade every colour together instead of snapping. */
+.mt-theme-fade,
+.mt-theme-fade * {
+	transition:
+		background-color var(--duration-slow) var(--ease-settle),
+		border-color var(--duration-slow) var(--ease-settle),
+		color var(--duration-slow) var(--ease-settle),
+		box-shadow var(--duration-slow) var(--ease-settle) !important;
+}

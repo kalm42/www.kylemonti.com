@@ -1,0 +1,75 @@
+/**
+ * Maps TanStack Highlight's semantic `th-*` classes to the `code-*` design
+ * tokens — see DESIGN.md → Code and prose → Syntax highlighter token map.
+ * Plain CSS, not Tailwind utilities: this file styles class names that
+ * only ever exist inside highlighter-generated HTML (inserted via
+ * `dangerouslySetInnerHTML`), so Tailwind's source scanner never sees
+ * them and can't generate utilities for them.
+ */
+
+.th-code {
+	margin: 0;
+	font-family: var(--font-mono);
+	font-size: var(--text-code-block);
+	line-height: var(--text-code-block--line-height);
+	color: var(--code-ink);
+}
+
+.th-line {
+	display: block;
+}
+
+.th-code--line-numbers .th-line {
+	position: relative;
+	padding-left: 2.5em;
+}
+
+.th-code--line-numbers .th-line::before {
+	content: attr(data-line);
+	position: absolute;
+	left: 0;
+	width: 2em;
+	color: var(--code-comment);
+	text-align: right;
+	user-select: none;
+}
+
+/* Applied via `highlight` line decorations — the code-line token's own usage note. */
+.mt-code-highlight {
+	background: var(--code-line);
+}
+
+.th-comment {
+	color: var(--code-comment);
+	font-style: italic;
+}
+
+.th-keyword,
+.th-command {
+	color: var(--code-keyword);
+}
+
+.th-string {
+	color: var(--code-string);
+}
+
+.th-number,
+.th-literal {
+	color: var(--code-number);
+}
+
+.th-function {
+	color: var(--code-function);
+}
+
+.th-type,
+.th-tag {
+	color: var(--code-type);
+}
+
+.th-operator,
+.th-property,
+.th-attr,
+.th-selector {
+	color: var(--code-punctuation);
+}

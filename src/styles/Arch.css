@@ -1,0 +1,4 @@
+.arch--draw {
+	transform-origin: 50% 100%;
+	animation: mt-rise 1100ms var(--ease-glide) 300ms both;
+}

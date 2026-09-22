@@ -1,0 +1,147 @@
+/**
+ * Styles for plain HTML MDX output inside `Prose` — see DESIGN.md → Code
+ * and prose (articles). Writers add no classes; every tag below is styled
+ * from the type scale and colour tokens.
+ */
+
+.mt-prose {
+	max-width: var(--container-prose);
+	font-family: var(--font-text);
+}
+
+.mt-prose > p {
+	font-size: var(--text-body-lg);
+	line-height: var(--text-body-lg--line-height);
+	color: var(--ink);
+}
+
+.mt-prose > p + p {
+	margin-top: 1.5em;
+}
+
+.mt-prose > h2 {
+	margin-top: 2.4em;
+	font-family: var(--font-display);
+	font-size: var(--text-heading-2);
+	line-height: var(--text-heading-2--line-height);
+	font-weight: var(--text-heading-2--font-weight);
+	letter-spacing: var(--text-heading-2--letter-spacing);
+	font-variation-settings:
+		"SOFT" 30,
+		"WONK" 0;
+	color: var(--ink);
+}
+
+.mt-prose > h3 {
+	margin-top: 2em;
+	font-family: var(--font-display);
+	font-size: var(--text-heading-3);
+	line-height: var(--text-heading-3--line-height);
+	font-weight: var(--text-heading-3--font-weight);
+	letter-spacing: var(--text-heading-3--letter-spacing);
+	font-variation-settings:
+		"SOFT" 30,
+		"WONK" 0;
+	color: var(--ink);
+}
+
+.mt-prose > ul,
+.mt-prose > ol {
+	margin-top: 1.5em;
+	padding-left: 1.5em;
+	font-size: var(--text-body-lg);
+	line-height: var(--text-body-lg--line-height);
+	color: var(--ink);
+}
+
+.mt-prose > ul {
+	list-style: disc;
+}
+
+.mt-prose > ol {
+	list-style: decimal;
+}
+
+/* Pull quotes: brass opening mark above, never a side rule. */
+.mt-prose > blockquote {
+	position: relative;
+	margin: 2em 0;
+	padding-top: 1.5em;
+	font-family: var(--font-display);
+	font-size: var(--text-quote);
+	line-height: var(--text-quote--line-height);
+	font-weight: var(--text-quote--font-weight);
+	font-style: italic;
+	letter-spacing: var(--text-quote--letter-spacing);
+	color: var(--ink);
+}
+
+.mt-prose > blockquote::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 8px;
+	height: 8px;
+	background: var(--brass);
+	transform: rotate(45deg);
+}
+
+/* Section breaks: the diamond hr (matches Ornament), never a plain line. */
+.mt-prose > hr {
+	position: relative;
+	height: 1px;
+	margin: 3em 0;
+	border: none;
+	background: var(--hairline);
+}
+
+.mt-prose > hr::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 8px;
+	height: 8px;
+	background: var(--brass);
+	transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.mt-prose > figure {
+	margin: 2em 0;
+}
+
+.mt-prose > figure img {
+	width: 100%;
+	border-radius: var(--radius-lg);
+}
+
+.mt-prose > figure figcaption {
+	margin-top: 0.75em;
+	font-size: var(--text-caption);
+	line-height: var(--text-caption--line-height);
+	color: var(--ink-subtle);
+	text-align: center;
+}
+
+/* Inline code for identifiers/values only, never whole sentences. */
+.mt-prose code {
+	padding: 0.15em 0.4em;
+	border-radius: var(--radius-sm);
+	background: var(--paper-sunken);
+	font-family: var(--font-mono);
+	font-size: var(--text-code-inline);
+	line-height: var(--text-code-inline--line-height);
+	font-weight: var(--text-code-inline--font-weight);
+}
+
+/* First letter of the opening paragraph, once per long essay — never on short notes. */
+.mt-prose-dropcap > p:first-of-type::first-letter {
+	float: left;
+	padding-top: 0.05em;
+	padding-right: 0.1em;
+	font-family: var(--font-display);
+	font-size: 5em;
+	line-height: 0.9;
+	color: var(--brand);
+}
