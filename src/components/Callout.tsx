@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority"
 import type { ReactNode } from "react"
 
-const calloutStyles = cva("flex flex-col gap-2 rounded-md p-5", {
+const calloutStyles = cva("flex flex-col gap-2 rounded-md p-5 my-4", {
 	variants: {
 		kind: {
 			note: "bg-brand-tint",

@@ -2,11 +2,21 @@
  * Styles for plain HTML MDX output inside `Prose` — see DESIGN.md → Code
  * and prose (articles). Writers add no classes; every tag below is styled
  * from the type scale and colour tokens.
+ *
+ * This file is a partial: every `--text-*`/colour/space variable here is
+ * defined in tokens.css or the `@theme` block in globals.css, both imported
+ * before this file — opening prose.css on its own won't resolve them.
+ *
+ * Font rules below reference `--font-fraunces`/`--font-newsreader`/
+ * `--font-jetbrains` directly (with the fallback stack spelled out) rather
+ * than `var(--font-display)`/`var(--font-text)`/`var(--font-mono)` — see the
+ * comment on those in globals.css's `@theme` block for why the indirection
+ * doesn't resolve in plain CSS.
  */
 
 .mt-prose {
 	max-width: var(--container-prose);
-	font-family: var(--font-text);
+	font-family: var(--font-newsreader), "Iowan Old Style", Georgia, serif;
 }
 
 .mt-prose > p {
@@ -21,7 +31,8 @@
 
 .mt-prose > h2 {
 	margin-top: 2.4em;
-	font-family: var(--font-display);
+	margin-bottom: 0.6em;
+	font-family: var(--font-fraunces), "Iowan Old Style", "Palatino Linotype", Georgia, serif;
 	font-size: var(--text-heading-2);
 	line-height: var(--text-heading-2--line-height);
 	font-weight: var(--text-heading-2--font-weight);
@@ -34,7 +45,8 @@
 
 .mt-prose > h3 {
 	margin-top: 2em;
-	font-family: var(--font-display);
+	margin-bottom: 0.4em;
+	font-family: var(--font-fraunces), "Iowan Old Style", "Palatino Linotype", Georgia, serif;
 	font-size: var(--text-heading-3);
 	line-height: var(--text-heading-3--line-height);
 	font-weight: var(--text-heading-3--font-weight);
@@ -67,7 +79,7 @@
 	position: relative;
 	margin: 2em 0;
 	padding-top: 1.5em;
-	font-family: var(--font-display);
+	font-family: var(--font-fraunces), "Iowan Old Style", "Palatino Linotype", Georgia, serif;
 	font-size: var(--text-quote);
 	line-height: var(--text-quote--line-height);
 	font-weight: var(--text-quote--font-weight);
@@ -125,11 +137,15 @@
 }
 
 /* Inline code for identifiers/values only, never whole sentences. */
+.mt-prose pre code {
+	background: var(--paper-sunken);
+}
+
 .mt-prose code {
 	padding: 0.15em 0.4em;
 	border-radius: var(--radius-sm);
-	background: var(--paper-sunken);
-	font-family: var(--font-mono);
+	background: var(--paper-raised);
+	font-family: var(--font-jetbrains), ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 	font-size: var(--text-code-inline);
 	line-height: var(--text-code-inline--line-height);
 	font-weight: var(--text-code-inline--font-weight);
@@ -140,7 +156,7 @@
 	float: left;
 	padding-top: 0.05em;
 	padding-right: 0.1em;
-	font-family: var(--font-display);
+	font-family: var(--font-fraunces), "Iowan Old Style", "Palatino Linotype", Georgia, serif;
 	font-size: 5em;
 	line-height: 0.9;
 	color: var(--brand);

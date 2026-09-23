@@ -37,8 +37,15 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Deploy
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This site builds to a static export (`output: "export"` in `next.config.ts`) and ships to Cloudflare as static assets — no Worker script, just the `./out` directory declared in `wrangler.jsonc`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+`.github/workflows/ci.yml` runs lint, type-check, unit tests, and Playwright e2e on every push and pull request. On a push to `main`, once all of those pass, a `deploy` job builds the site and runs `wrangler deploy` via [`cloudflare/wrangler-action`](https://github.com/cloudflare/wrangler-action). That job needs two repository secrets:
+
+- `CLOUDFLARE_API_TOKEN` — a token scoped to "Edit Cloudflare Workers" on this account only.
+- `CLOUDFLARE_ACCOUNT_ID` — the Cloudflare account ID that owns the `kylemonti-com` Worker.
+
+`NEXT_PUBLIC_POSTHOG_KEY` is an optional third secret; set it to bake PostHog analytics into the deployed build (see Analytics above). Leaving it unset keeps PostHog disabled on the live site, same as local development without `.env.local`.
+
+To deploy manually from a machine with `wrangler` authenticated: `npm run build && npx wrangler deploy`.

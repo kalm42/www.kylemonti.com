@@ -37,7 +37,23 @@
 	--color-code-line: var(--code-line);
 	--color-code-border: var(--code-border);
 
-	/* Real font files loaded via next/font/google in _document.tsx (see src/shared/fonts.ts); the rest of each stack is the fallback. */
+	/*
+	 * Real font files loaded via next/font/google on the wrapper div in
+	 * _app.tsx (see src/shared/fonts.ts); the rest of each stack is the
+	 * fallback. Safe to consume as Tailwind utilities (font-display/
+	 * font-text/font-mono) anywhere — @theme inline bakes each utility's
+	 * font-family directly, resolving --font-fraunces/--font-newsreader/
+	 * --font-jetbrains at the element that uses the class.
+	 *
+	 * NOT safe to reference via var(--font-display) etc. in plain CSS: these
+	 * three custom properties are declared here, at :root, where the
+	 * underlying --font-fraunces/--font-newsreader/--font-jetbrains don't
+	 * exist yet (they're only set on the _app.tsx div, a :root descendant),
+	 * so they compute to nothing and any element consuming them falls back
+	 * to an inherited font instead. prose.css and code-theme.css reference
+	 * --font-fraunces/--font-newsreader/--font-jetbrains directly instead,
+	 * with the same fallback stacks repeated, for exactly this reason.
+	 */
 	--font-display: var(--font-fraunces), "Iowan Old Style", "Palatino Linotype", Georgia, serif;
 	--font-text: var(--font-newsreader), "Iowan Old Style", Georgia, serif;
 	--font-mono: var(--font-jetbrains), ui-monospace, "SF Mono", Menlo, Consolas, monospace;
@@ -191,7 +207,9 @@
 body {
 	background: var(--paper);
 	color: var(--ink);
-	font-family: var(--font-text);
+	/* No font-family here — --font-newsreader only exists on the font-variable
+	   div in _app.tsx (a descendant of body), so it can't resolve on body
+	   itself. The "font-text" class on that div sets the base font instead. */
 	font-size: var(--text-body);
 	line-height: var(--text-body--line-height);
 	text-rendering: optimizeLegibility;
@@ -207,10 +225,11 @@ body {
 		color-scheme: dark;
 	}
 
+	/* Direct --font-fraunces reference, not var(--font-display) — see the comment on --font-display above. */
 	h1,
 	h2,
 	h3 {
-		font-family: var(--font-display);
+		font-family: var(--font-fraunces), "Iowan Old Style", "Palatino Linotype", Georgia, serif;
 		font-variation-settings:
 			"SOFT" 30,
 			"WONK" 0;

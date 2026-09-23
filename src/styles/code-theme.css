@@ -9,7 +9,8 @@
 
 .th-code {
 	margin: 0;
-	font-family: var(--font-mono);
+	/* Direct --font-jetbrains reference, not var(--font-mono) — see the comment on --font-mono in globals.css's `@theme` block for why the indirection doesn't resolve in plain CSS. */
+	font-family: var(--font-jetbrains), ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 	font-size: var(--text-code-block);
 	line-height: var(--text-code-block--line-height);
 	color: var(--code-ink);

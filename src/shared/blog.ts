@@ -53,6 +53,7 @@ function loadPostFile(slug: string): { frontmatter: PostFrontmatter; document: M
 	const document = parseMarkdown(source, {
 		frontmatter: true,
 		headingIds: true,
+		allowHtml: true,
 		extensions: [calloutsExtension()],
 	})
 

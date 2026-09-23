@@ -3,7 +3,7 @@ import type { ReactNode } from "react"
 
 import { cn } from "~/shared/cn"
 
-const headingVariants = cva("", {
+const headingVariants = cva("text-pretty", {
 	variants: {
 		variant: {
 			heading: "",

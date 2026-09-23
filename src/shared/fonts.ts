@@ -2,8 +2,9 @@ import { Fraunces, JetBrains_Mono, Newsreader } from "next/font/google"
 
 /**
  * The site's three type families, exposed as CSS variables and applied
- * once, on `<html>` in `_document.tsx` — see DESIGN.md → Typography and
- * → Next.js + Tailwind integration → Fonts.
+ * once, on the wrapper div in `_app.tsx` (next/font can't be called in
+ * `_document.tsx`) — see DESIGN.md → Typography and → Next.js + Tailwind
+ * integration → Fonts.
  */
 const fraunces = Fraunces({
 	subsets: ["latin"],

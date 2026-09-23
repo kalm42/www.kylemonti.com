@@ -45,7 +45,7 @@ function CodeBlock(props: CodeBlockProps) {
 	}
 
 	return (
-		<div className='overflow-hidden rounded-lg border border-code-border bg-code-ground'>
+		<div className='overflow-hidden rounded-lg border border-code-border bg-code-ground my-4'>
 			{(filename !== undefined || lang !== undefined) && (
 				<div className='flex items-center justify-between border-b border-code-border px-4 py-2'>
 					<span className='font-mono text-code-label text-code-ink'>{filename}</span>

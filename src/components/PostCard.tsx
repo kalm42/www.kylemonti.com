@@ -49,7 +49,7 @@ function PostCard(props: PostCardProps) {
 		<article className='group border-y border-hairline hover:border-transparent -mb-px -mx-5 py-2 md:py-4'>
 			<Link
 				href={href}
-				className='p-5 transition-colors duration-base rounded-lg hover:bg-paper-raised md:grid md:grid-cols-[10.5rem_1fr_2rem] md:items-start flex items-center justify-between gap-6'
+				className='p-5 flex-col md:flex-row transition-colors duration-base rounded-lg hover:bg-paper-raised md:grid md:grid-cols-[10.5rem_1fr_2rem] flex items-start justify-between gap-6'
 			>
 				<PostMeta date={date} readingTime={readingTime} />
 				<div className='flex min-w-0 flex-col gap-2'>
@@ -59,7 +59,7 @@ function PostCard(props: PostCardProps) {
 					<Paragraph variant='excerpt'>{excerpt}</Paragraph>
 					<TagList tags={tags} limit />
 				</div>
-				<span className='flex shrink-0 translate-y-3 -translate-x-2.5 items-center text-brand opacity-0 transition-all duration-slow ease-glide group-hover:translate-x-0 group-hover:opacity-100'>
+				<span className='flex self-end md:self-auto shrink-0 translate-y-3 -translate-x-2.5 items-center text-brand opacity-0 transition-all duration-slow ease-glide group-hover:translate-x-0 group-hover:opacity-100'>
 					<Icon name='arrow-right' size={18} />
 				</span>
 			</Link>
