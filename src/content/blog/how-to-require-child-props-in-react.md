@@ -1,45 +1,34 @@
 ---
-slug: /how-to-require-child-props-in-react
-templateKey: blog-post
-title: How to Require Child Props in React
-description: You have a component and the child of that component needs to be
-  one or more HTML elements. How do you properly set the prop types for this?
-tags:
-  - brewing
-  - chemex
-thumbnail: /img/how-to-require-child-props-in-react.png
-thumbnailAlt: Two children celebrating in front of a macbook.
-date: 2019-05-06T15:04:10.000Z
+title: How to require child props in React
+date: 2019-05-06
+excerpt: PropTypes for the case where a component's child must be one or more HTML elements.
+tags: React, PropTypes
 ---
 
-# How to Require Child Props in React
+![How to require child props in React](/img/how-to-require-child-props-in-react.png)
 
-![How to require child props in react](images/2019-05-06-how-to-require-child-props-in-react.png)
+A component whose child must be one or more HTML elements needs its own prop type for that — here's how to set it up.
 
-You have a component and the child of that component needs to be one or more HTML elements. How do you properly set the prop types for this?
-
-```
-static propTypes =  {
-  Children: PropTypes.node.isRequired,
-}
-```
-
-Or
-
-```
+```javascript
 static propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
-  ]).isRequired
+	children: PropTypes.node.isRequired,
 }
 ```
 
-The first will require that there is a single node element as the child of the component. The second requires that there is one or more node elements as the child of the component.
+Or:
 
-I hope this helps. If it did, let me know.
+```javascript
+static propTypes = {
+	children: PropTypes.oneOfType([
+		PropTypes.arrayOf(PropTypes.node),
+		PropTypes.node,
+	]).isRequired,
+}
+```
+
+The first requires a single node as the component's child. The second requires one or more nodes.
 
 ## Resources
 
 - [Stack Overflow](https://stackoverflow.com/questions/42122522/reactjs-what-should-the-proptypes-be-for-this-props-children)
-- [React Documentation](https://reactjs.org/docs/typechecking-with-proptypes.html)
+- [React documentation](https://reactjs.org/docs/typechecking-with-proptypes.html)

@@ -1,66 +1,41 @@
 ---
-templateKey: blog-post
-slug: /resources
-title: Resources I Use
-description: Resources I use to get stuff done. Everything from other blogs,
-  images, patters, icons.
-tags:
-  - css
-  - html
-  - grid
-thumbnail: /img/resources-i-use.png
-thumbnailAlt: Black and white shot of a workshop
-date: 2019-09-12T15:04:10.000Z
+title: Resources I use
+date: 2019-09-12
+excerpt: A running list of the sites I actually reach for — patterns, stock art, icons, type, color, and other odds and ends.
+tags: Design, Resources
 ---
 
-# Resources
+This is the list I actually pull from — kept here because a bookmarks folder is where good links go to die.
 
 ## Blogs
 
 - [Dan Abramov](https://overreacted.io/)
 
-## Background Patterns
+## Background patterns
 
-- [iStore](https://lstore.graphics/paaatterns/)
+- [lStore](https://lstore.graphics/paaatterns/)
 - [Toptal](https://www.toptal.com/designers/subtlepatterns/)
 - [Hero Patterns](https://www.heropatterns.com/)
 - [Nova Pattern](https://www.novapattern.com/)
-- [Patter Ninja](https://patterninja.com/)
+- [Pattern Ninja](https://patterninja.com/)
+- [Trianglify](https://trianglify.io/) — triangular geometric gradients, generated to order
+- [Cool Backgrounds](https://coolbackgrounds.io/) — tools for compelling, colorful background images
+- [Flat Icon Pattern](https://pattern.flaticon.com/) — custom patterns built from Flaticon's vector elements
+- [Creative Market](https://creativemarket.com/search?q=repeating+pattern) — repeating pattern assets, for purchase
 
-Custom make patterns.
+## Stock photos
 
-- [Triaglify](https://trianglify.io/)
-
-Triangular geometric grandient patterns.
-
-- [Cool Backgrounds](https://coolbackgrounds.io/)
-
-"Cool Backgrounds is a collection of tools to create compelling, colorful images for blogs, social media, and websites."
-
-- [Flat Icon Pattern](https://pattern.flaticon.com/)
-
-Custom make patterns with vector elements from flat icon.
-
-- [Creative Market](https://creativemarket.com/search?q=repeating+pattern)
-
-Purchase repeating pattern assets.
-
-## Stock Photos
-
-- [unsplash](https://unsplash.com/)
+- [Unsplash](https://unsplash.com/)
 - [Pexels](https://www.pexels.com/)
 - [Pixabay](https://pixabay.com/)
 
-## Stock Art
+## Stock art
 
-- [undraw](https://undraw.co/)
+- [unDraw](https://undraw.co/)
 - [Open Peeps](https://www.openpeeps.com/)
 - [Free Illustrations](https://freeillustrations.xyz/)
 - [Humaaans](https://www.humaaans.com/)
-
-Doesn't have stock art, but is software for stock art.
-
-- [Blush](https://blush.design/)
+- [Blush](https://blush.design/) — software for building stock art, rather than a library of it
 
 ## Icons
 
@@ -68,7 +43,7 @@ Doesn't have stock art, but is software for stock art.
 
 ## Typography
 
-- [Basics](https://www.pierrickcalvez.com/journal/a-five-minutes-guide-to-better-typography)
+- [A five-minute guide to better typography](https://www.pierrickcalvez.com/journal/a-five-minutes-guide-to-better-typography)
 - [Google Fonts](https://fonts.google.com)
 - [Inter](https://rsms.me/inter/)
 - [Dank Mono](https://dank.sh/)
@@ -78,11 +53,11 @@ Doesn't have stock art, but is software for stock art.
 - [Adobe Color](https://color.adobe.com)
 - [Color Mind](http://colormind.io/bootstrap/)
 
-## Print and Mail
+## Print and mail
 
 - [Lob](https://lob.com/)
 
-## Credit Card Processing
+## Credit card processing
 
 - [Stripe](https://stripe.com/)
 
@@ -90,15 +65,15 @@ Doesn't have stock art, but is software for stock art.
 
 - [Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 
-## Node Modules
+## Node modules
 
 - [Framer Motion](https://www.framer.com/motion/)
 
-## Image Optimization
+## Image optimization
 
-- [SVG OMG](https://jakearchibald.github.io/svgomg/)
+- [SVGOMG](https://jakearchibald.github.io/svgomg/)
 
-## Web Based Tools
+## Web-based tools
 
 - [Canva](https://www.canva.com/)
 - [CSS Triggers](https://csstriggers.com/)

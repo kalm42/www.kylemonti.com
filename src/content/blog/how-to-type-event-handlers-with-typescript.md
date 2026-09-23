@@ -1,73 +1,56 @@
 ---
-templateKey: blog-post
-title: How to type event handlers with Typescript
-description: Have you been writing Typescript not in a framework like React,
-  Vue, Next, Angular, et al? Did you add an event listener only to get an error
-  because the event is implicitly any? Here are your answers for what to type
-  it.
-tags:
-  - typescript
-thumbnail: /img/how-to-type-event-handlers-with-typescript.jpg
-thumbnailAlt: Planner with pens
-slug: how-to-type-event-handlers-with-typescript
-date: 2021-04-11T17:17:01.379Z
+title: How to type event handlers with TypeScript
+date: 2021-04-11
+excerpt: The TypeScript type for common DOM event handlers — click, keydown, and focus — when there's no framework inferring it for you.
+tags: TypeScript
 ---
 
-Have you been writing Typescript not in a framework like React, Vue, Next, Angular, et al? Did you add an event listener only to get an error because the event is implicitly any? Here are your answers for what to type it. I'll update this as I stumble upon them.
+Writing plain DOM TypeScript outside a framework like React, Vue, or Angular means the compiler won't infer an event's type inside `addEventListener` — it comes back `any` unless it's typed by hand. Here's what to use, per event, updated as I run into more of them.
 
-The 'click' event handler uses 'MouseEvent'.
+## Setup
 
-## Click Example
+Every example below runs against the same page:
 
-```html
-<button>Click Me</button>
+```html title="index.html"
+<button>Click me</button>
 
-<script src="/foo.js">
-	console.log('Lets just pretend our Typescript outputs to this file.')
-</script>
+<script src="/foo.js"></script>
 ```
 
-```typescript
-const button = document.querySelector('button');
-button.addEventListener('click', function (event: MouseEvent) {
-  // do stuff
-}
+Pretend `foo.js` is what the TypeScript below compiles to — a small suspension of disbelief that saves rebuilding the same HTML three times.
+
+```typescript title="foo.ts"
+const button = document.querySelector("button")
 ```
 
-The 'keydown' event handler uses 'KeyboardEvent'.
+`querySelector` can return `null`, so every handler below is attached with `?.` to keep this compiling under `strict` mode. Swap it for a real null check if a missing button should fail loudly instead.
 
-## Keydown Example
+## Click
 
-```html
-<button>Press space or enter</button>
+The `click` event handler uses `MouseEvent`:
 
-<script src="/foo.js">
-	console.log('Lets just pretend our Typescript outputs to this file.')
-</script>
+```typescript title="foo.ts"
+button?.addEventListener("click", function (event: MouseEvent) {
+	// do stuff
+})
 ```
 
-```typescript
-const button = document.querySelector('button');
-button.addEventListener('keydown', function (event: KeyboardEvent) {
-  // do stuff
-}
+## Keydown
+
+The `keydown` event handler uses `KeyboardEvent`:
+
+```typescript title="foo.ts"
+button?.addEventListener("keydown", function (event: KeyboardEvent) {
+	// do stuff
+})
 ```
 
-Focus related events handler use 'FocusEvent'. Events like 'focus', 'focusin', 'blur', et al.
+## Focus
 
-## Focus Example
+Focus-related handlers — `focus`, `focusin`, `blur`, and the like — use `FocusEvent`:
 
-```html
-<button>Press space or enter</button>
-
-<script src="/foo.js">
-	console.log('Lets just pretend our Typescript outputs to this file.')
-</script>
-```
-
-```typescript
-const button = document.querySelector('button');
-button.addEventListener('focus', function (event: FocusEvent) {
-  // do stuff
-}
+```typescript title="foo.ts"
+button?.addEventListener("focus", function (event: FocusEvent) {
+	// do stuff
+})
 ```

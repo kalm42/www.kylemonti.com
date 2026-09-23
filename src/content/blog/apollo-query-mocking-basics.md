@@ -1,27 +1,15 @@
 ---
-slug: /apollo-query-mocking-basics
-templateKey: blog-post
-title: Apollo Query Mocking Basics
-description: How to setup basic apollo graphql query mocking for your jest
-  tests. Copy and paste ready.
-tags:
-  - apollo
-  - mock
-  - jest
-  - testing
-  - graphql
-thumbnail: /img/apollo-query-mocking-basics.png
-thumbnailAlt: The apollo lander capsule.
-date: 2020-12-14T19:57:43.522Z
+title: Apollo query mocking basics
+date: 2020-12-14
+excerpt: A copy-paste-ready pattern for mocking Apollo GraphQL queries in Jest, plus a generator that keeps large responses out of the test file itself.
+tags: Apollo, GraphQL, Jest, Testing
 ---
 
-I've written this blog for the same reason I've written every other blog post. I had to look this up. So now I'll have a quick access resource for it.
+Testing a component that calls Apollo's GraphQL client means feeding it fake data instead of hitting a real server. Apollo's `MockedProvider` handles that, but the mocks it wants are verbose enough that scattering them through test files makes the tests hard to read. A small generator function fixes that.
 
-Ok first things first. The basic setup for testing a component that uses Apollo GraphQL Client.
+## Wrap the component in MockedProvider
 
-## Basic setup for Apollo aware component testing
-
-```javascript
+```javascript title="Component.test.js"
 import React from "react"
 import { render } from "@testing-library/react"
 import { MockedProvider } from "@apollo/react-testing"
@@ -29,7 +17,7 @@ import Component from "./Component"
 import { mockQueryName1Generator, mockQueryName2Generator } from "../mock-query-name-generator"
 
 describe("ComponentName", () => {
-	it("should do stufff", () => {
+	it("renders with mocked data", () => {
 		const mocks = [...mockQueryName1Generator(2), ...mockQueryName2Generator()]
 		render(
 			<MockedProvider mocks={mocks} addTypename={false}>
@@ -40,12 +28,11 @@ describe("ComponentName", () => {
 })
 ```
 
-There's the basic structure. Now lets write the generators.
+`MockedProvider` intercepts the queries `Component` fires and resolves them from the `mocks` array instead of a network call. That array comes from a generator, not a literal object sitting in the test.
 
 ## Write a mock generator
 
-```javascript
-// mock-query-name-generator.js
+```javascript title="mock-query-name-generator.js"
 import { QUERY_NAME } from "../queries"
 
 export const mockQueryNameGenerator = (count = 1) => {
@@ -56,6 +43,6 @@ export const mockQueryNameGenerator = (count = 1) => {
 }
 ```
 
-Now you can call a function to get an array of mocks. For queries that have 100+ lines of response data this makes the testing files a lot cleaner.
+Calling the generator returns an array of matching mocks, which keeps the test file readable once a query's response runs past a few lines. For anything with a large response shape, I run the app in the browser, copy the real response straight into the mock, and sanitize whatever looks sensitive before it goes in the repo.
 
-I generally will run the application in the browser and straight copy the real response into the mock. If the response includes any sensitive information I go through and sanitize the data to make it generic.
+That's the whole pattern: one `MockedProvider` wrapper, one generator per query, and the mocks stay out of the way of the test itself.

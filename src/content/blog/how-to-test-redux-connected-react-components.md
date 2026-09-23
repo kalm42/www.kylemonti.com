@@ -1,28 +1,18 @@
 ---
-templateKey: blog-post
 title: How to test Redux connected React components
-description: Ugh, higher-order components. I'm not a fan, I've never been a fan
-  but they exist. They're all up in our code bases and they need to be tested
-  like everything else. Like video games I go for 100%. Sometimes that means odd
-  tests to make sure that I get some random edge case because some else clause
-  isn't covered in tests.
-tags:
-  - testing
-thumbnail: /img/how-to-test-redux-connected-react-components.png
-thumbnailAlt: A adutitorium style college classroom
-slug: how-to-test-redux-connected-react-components
-date: 2021-02-17T22:26:11.434Z
+date: 2021-02-17
+excerpt: A pattern for mocking Redux state so it's injected directly into connected components under test.
+tags: Redux, React, Testing
 ---
 
-Ugh, higher-order components. I'm not a fan, I've never been a fan but they exist. They're all up in our code bases and they need to be tested like everything else. Like video games I go for 100%. Sometimes that means odd tests to make sure that I get some random edge case because some else clause isn't covered in tests.
+Higher-order components aren't my favorite pattern, but they're everywhere in real codebases, and they need tests like everything else. I tend toward full coverage the way I'd finish a video game, which sometimes means writing an odd test just to hit some `else` branch nothing else exercises.
 
-This is how to mock the redux state so that it get injected into your redux connected components.
+Here's how to mock Redux state so it gets injected into a connected component.
 
 ## Component to test
 
-```javascript
-// App.js
-import { connect } from "reat-redux"
+```javascript title="App.js"
+import { connect } from "react-redux"
 
 const App = (props) => <div>{props.user}</div>
 
@@ -31,14 +21,13 @@ const mapStateToProps = (state) => state
 export default connect(mapStateToProps)(App)
 ```
 
-I know, it's amazing. Look at that elegance, the beauty in the simplicity. But go with it, pretend there's some complex logic and we need to get to some edge case. Now for the how we do that.
+This component barely does anything, but pretend it has real logic worth chasing an edge case for. Here's how.
 
-First up, extend the render method from `@testing-library/react`. Shout out to Kent C Dodds. His [testing javascript](https://testingjavascript.com/) course is how I learned testing. You should buy it. Go now, pay the man. Tangent over.
+This starts by extending the render method from `@testing-library/react` — a pattern from [Kent C. Dodds' Testing JavaScript course](https://testingjavascript.com/), which is where I actually learned to test.
 
-We extend the render method to provide an initial state for the store. BOOM injected. The Emeril of render extensions — because of the boom. Anyway.
+Extending the render method lets an initial state get injected straight into the store:
 
-```javascript
-// render-util.js
+```javascript title="render-util.js"
 import React from "react"
 import { render } from "@testing-library/react"
 import { createStore } from "redux"
@@ -55,27 +44,24 @@ function extRender(ui, { initialState, store = createStore(reducer, initialState
 export default extRender
 ```
 
-Then we take the extended render and use it to inject the initial state.
+Then the extended render gets used to inject the initial state:
 
-```javascript
-// App.test.js
-import React from 'react'
-import { screen } from '@testing-library/react'
-import extRender from '../render-util'
-import App from './App
+```javascript title="App.test.js"
+import React from "react"
+import { screen } from "@testing-library/react"
+import extRender from "../render-util"
+import App from "./App"
 
-describe('App', () => {
-  it('should show the user name', () => {
-    const name = `LOREM IPSUM`
-    extRender(<App>, { initialState: { user: name } })
+describe("App", () => {
+	it("should show the user name", () => {
+		const name = `LOREM IPSUM`
+		extRender(<App />, { initialState: { user: name } })
 
-    expect(screen.getByText(name)).toBeInTheDocument()
-  })
+		expect(screen.getByText(name)).toBeInTheDocument()
+	})
 })
 ```
 
 ## Sources
 
-Most of this code has been straight up copied from [Redux.js.org](https://redux.js.org/recipes/writing-tests) I've copied it here for my convienence. You should without a doubt go to that url and read what redux has to say about redux they are the official source.
-
-Photo by [Museums Victoria](https://unsplash.com/@museumsvictoria?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/school?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
+Most of this is adapted from [Redux's own testing recipes](https://redux.js.org/recipes/writing-tests) — worth reading directly, since it's the official source.

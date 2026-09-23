@@ -1,21 +1,11 @@
 ---
-slug: /matrial-ui-jest-snapshot-class-names
-templateKey: blog-post
-title: Getting Material-UI Class Names To Not Change For Snapshot Testing
-description: It's an easy trick but one you'll be hard pressed to find. A
-  colleague of mine is the one who actually found it. You can visit her here.
-  I'm writing it here for my own sanity.
-tags:
-  - brewing
-  - chemex
-thumbnail: /img/getting-material-ui-class-names-to-not-change-for-snapshot-testing.png
-thumbnailAlt: Close up shot of flowers in a meadow at the foot of a tree.
-date: 2020-06-19T19:57:43.522Z
+title: Getting Material-UI class names to not change for snapshot testing
+date: 2020-06-19
+excerpt: The one option that turns Material-UI's non-deterministic class names deterministic, so snapshot tests stop breaking on every rebuild.
+tags: Material-UI, Testing
 ---
 
-It's an easy trick but one you'll be hard pressed to find. A colleague of mine is the one who actually found it. You can visit her [here](https://linktr.ee/_natural_e). I'm writing it here for my own sanity.
-
-The trick: (copied from Material-Ui documentation)
+Without a `name` option, Material-UI's `makeStyles` appends a random number to every class name, so a snapshot test fails on each rebuild even though nothing actually changed. A colleague of mine tracked down the fix, and I'm writing it here mostly for my own future reference: give the styles a `name` that starts with `Mui`.
 
 ```javascript
 const useStyles = makeStyles(
@@ -36,8 +26,6 @@ const useStyles = makeStyles(
 )
 ```
 
-The page is [here](https://material-ui.com/styles/advanced/#with-material-ui-core).
+That example comes straight from the [Material-UI advanced styles guide](https://material-ui.com/styles/advanced/#with-material-ui-core). With a `Mui`-prefixed name in place, the generated class names stay the same between builds, and the snapshots stop drifting.
 
-By adding a name that begins with "Mui" the class name will change from non-deterministic (aka they append a number at the end of the class name) to deterministic (aka they don't append a number at the end of the class name).
-
-That's it.
+Credit for finding this goes to [a colleague of mine](https://linktr.ee/_natural_e).

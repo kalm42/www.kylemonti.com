@@ -1,75 +1,60 @@
 ---
-slug: /why-not-to-use-wordpress
-templateKey: blog-post
-title: Why Not To Use WordPress
-description: There are plenty of reasons people give to use WordPress, and by
-  all means my opinion is just that. Also as with everything computer related
-  "it depends". If you're stupid good with PHP then yeah you can get WordPress
-  to do just about anything you want it to. This post isn't for you. This post
-  is for everyone else. For those that don't know why many dislike WordPress
-  (myself included).
-tags:
-  - brewing
-  - chemex
-thumbnail: /img/why-not-to-use-wordpress.png
-thumbnailAlt: A sad child walking down a dirt road carrying a stuffed lion that is almost as large as the child.
-date: 2019-04-09T15:04:10.000Z
+title: Why not to use WordPress
+date: 2019-04-09
+excerpt: Five reasons WordPress frustrates me as a developer — from an ancient PHP floor to a templating system that needs two diagrams to explain — and one honest concession for when it's still the right call.
+tags: WordPress, PHP
 ---
 
-# Why Not To Use WordPress
+There are plenty of reasons people give for using WordPress, and my opinion here is just that — an opinion. As with everything computer-related, it depends. If you're excellent with PHP, you can get WordPress to do just about anything you want. This post isn't for you. It's for everyone else — the people who don't already know why so many developers dislike WordPress, myself included.
 
-There are plenty of reasons people give to use WordPress, and by all means my opinion is just that. Also as with everything computer related "it depends". If you're stupid good with PHP then yeah you can get WordPress to do just about anything you want it to. This post isn't for you. This post is for everyone else. For those that don't know why many dislike WordPress (myself included).
+## 1. A dangerously old PHP floor
 
-1. WordPress' minimum PHP version is PHP 5.2
+WordPress' minimum supported PHP version, as of this writing, is PHP 5.2. It was released on January 6, 2006 — 13 years ago, the same year The Da Vinci Code came out. The PHP group stopped supporting 5.2 on January 6, 2011, the year Thor came out — 8 years of security exploits found and never patched for anyone still running it.
 
-5.2 was released on January 6, 2006. As of today that's 13 years ago. For reference, that's the year that the Da Vinci Code movie came out. 5.2 became upsupported by the PHP group January 6, 2011, 8 years ago, and the year Thor was released. That's 8 years of security exploits to be found and not patched.
+I'm not saying you're on PHP 5.2, or that you'd even know if you were. I'm saying it's bad practice to let users make a choice that bad without knowing it's a choice at all.
 
-I'm not saying that you're using php 5.2, but do you know which version you are using or how to upgrade it if you are using 5.2? You might, you might not. I'm saying it's bad practice to let users make poor choices like running software on old, outdated, unsupported platforms.
+## 2. Where in the codebase is X?
 
-2. Where in the codebase is X?
+You want to change something — anything, it doesn't matter what. Where do you look? The admin dashboard, theme options, a plugin, template code, plugin code, some combination of all four?
 
-You want to change something, anything, it doesn't really matter what. Where do you find it? Is it in the Admin Dashboard, theme options, a plugin, in the template code, plugin code, both?
+A WordPress site can push almost all of its logic into the theme with no plugins at all, or the other way around — heavy on plugins, sparse theme. View and logic aren't cleanly separated either way, which often makes tracking down a bug much harder than it should be.
 
-You can program a large amount of functionality in a theme to the point where you don't have any plugins, or you can have a lot of plugins and a sparse theme.
+I've spent hours digging through code only to find a toggle five or six clicks deep in the admin UI that would have fixed it instead. That's unacceptable for software this widely used.
 
-View and logic are not nicely seperated in WordPress as a result of this often it can be very difficult to find an error.
+## 3. Coding standards
 
-I have spent hours digging through code only to find a toggle 5-7 clicks deep that would have fixed it also. That's unacceptable.
+Maybe that's just me being picky. (It's not.) Mixing object-oriented and functional programming freely through the same codebase isn't a style choice, it's a maintenance cost — and WordPress core does exactly that.
 
-3. Coding Standards
-
-Maybe I'm just being picky (I'm not) but you should not be allowed to mix a object oriented programming (OOP) and functional programming.
-
-The fact that this function is in their codebase.
+Take this actual function from WordPress core:
 
 ```php
 function __return_false() {
-    return false;
+	return false;
 }
 ```
 
-It's a function that returns false. WHY? Why tf would you add that?
+It's a function that returns `false`. Somewhere, someone needed that badly enough to ship it.
 
-4. Templating
+## 4. Templating
 
-I've said it before but I'll say it again. You can program all of a plugin's functionality directly into a template (theme). No. Just no.
+I've said it before and I'll say it again: you can build an entire plugin's functionality directly inside a template file. That's a design failure, not a feature.
 
-Their templating is so complex that they require not [1](https://i.stack.imgur.com/c1UYR.png), but [2](https://developer.wordpress.org/files/2014/10/template-hierarchy.png) complex diagrams to explain it.
+The templating system is complex enough to need not one but two diagrams to explain it: [a quick visual overview](https://i.stack.imgur.com/c1UYR.png) and [WordPress's own, more detailed version](https://developer.wordpress.org/files/2014/10/template-hierarchy.png).
 
-5. Hacking target
+## 5. A prime hacking target
 
-As the number 1 Content Management System on the internet it is the number 1 target by hackers. Once an exploit is found there are hundreds of thousands of sites that are vulnerable.
+As the most popular content management system on the internet, WordPress is also the most popular target. Once an exploit surfaces, hundreds of thousands of sites are vulnerable to it at once.
 
-I have seen small sites getting less than 50 requests a day suddenly be hit with hundreds of brute force attacks out of no where. I'll repeat that these were small, unpopular sites.
+I've watched small sites getting fewer than 50 requests a day suddenly get hit with hundreds of brute-force attacks out of nowhere — worth repeating, these were small, unpopular sites, not high-value targets.
 
-## The Good
+## The good
 
-It's not all bad. If you have no skill in web development then you can make a website. Need it to do something else, there's probably a plugin that does it. It won't do it well. It won't do it quickly. But ... it will do it. So if you're low on skill, and money. It does do the job, and honestly sometimes, that's good enough.
+It's not all bad. Someone with no web development skill at all can still put up a website with it, and if that site needs to do something unusual, there's probably a plugin for it. It won't do that thing well, and it won't do it quickly, but it will do it. When skill and money are both in short supply, that's sometimes good enough.
 
-## Works Cited
+## Works cited
 
-- [PHP Unsupported Branches](https://www.php.net/eol.php)
-- [WordPress Coding Standards](https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/)
-- [WP Return False](https://developer.wordpress.org/reference/functions/__return_false/)
-- [Complex Diagram 1](https://i.stack.imgur.com/c1UYR.png)
-- [Complex Diagram 2](https://developer.wordpress.org/files/2014/10/template-hierarchy.png)
+- [PHP unsupported branches](https://www.php.net/eol.php)
+- [WordPress coding standards](https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/)
+- [`__return_false()` in the WordPress reference](https://developer.wordpress.org/reference/functions/__return_false/)
+- [Template hierarchy, quick version](https://i.stack.imgur.com/c1UYR.png)
+- [Template hierarchy, official version](https://developer.wordpress.org/files/2014/10/template-hierarchy.png)

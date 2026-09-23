@@ -1,43 +1,32 @@
 ---
-slug: "2019-02-git-clean-up"
-title: "Remove All Your Local Git Branches"
-date: 2019-02-19T15:04:10.000Z
-description: Clear up hard disk space by removing all your old git branches.
-tags:
-  - css
-  - html
-  - grid
-templateKey: "blog-post"
-thumbnail: /img/remove-all-your-local-git-branches.png
-thumbnailAlt: Shopping cart full of trash atop of a pile of more rubbish.
+title: Remove all your local git branches
+date: 2019-02-19
+excerpt: A one-line command for clearing out every merged and abandoned git branch, plus how to wire it up as an alias.
+tags: Git, Shell
 ---
 
-# Remove All Your Local Git Branches
-
-Why in the world would you want to do this?! Well, after you work on a few projects for a few months/years you tend to accrue a bunch of crud sitting in your `.git` folder.
-
-Time to clean house. Well a little anyways.
+A few months into any project, `git branch` starts listing branches merged months ago and never deleted. One command clears the whole list out at once.
 
 ```shell
-git branch | egrep -v “(master|\*)” | xargs git branch -D
+git branch | egrep -v "(master|\*)" | xargs git branch -D
 ```
 
-That will remove all branches but master and the one you’re currently on.
+That removes every branch except `master` (swap in `main` if that's your default) and whichever one you're currently on.
 
-There are some nifty things you can do to integrate this into your workflow a little more.
+## Turn it into an alias
 
-You could add it as a git alias.
+Typing the full command each time gets old, so I keep it as a git alias instead:
 
 ```shell
-git config --global alias.clean-branches "!git branch | egrep -v “(master|\*)” | xargs git branch -D”
+git config --global alias.clean-branches '!git branch | egrep -v "(master|\*)" | xargs git branch -D'
 ```
 
-You could add more branches to not delete by changing the regular expression.
+`git clean-branches` now does the same cleanup on demand.
+
+## Keep more branches around
+
+Add more names to the regular expression to protect other branches from deletion, like `develop`:
 
 ```shell
-git branch | egrep -v “(master\|develop\|\*)” | xargs git branch -D
+git branch | egrep -v "(master|develop|\*)" | xargs git branch -D
 ```
-
-Have fun with it. I mean, this is supposed to be fun.
-
-I hope this helps. If it did, let me know.

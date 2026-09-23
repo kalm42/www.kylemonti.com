@@ -12,6 +12,7 @@ Components live in the artifact as reference implementations (`window.Monti`, Re
 - Sentence case for every heading, button and label. Never Title Case, never ALL CAPS in source — the `eyebrow` style uppercases itself via CSS.
 - Buttons and links start with a verb: "Read the writing", "Download PDF", "Open the workshop". Links that leave the page name the destination and carry the `arrow-up-right` icon.
 - No exclamation marks, no emoji, no "passionate about", no "Welcome to my site". Say what is here.
+- Blog prose carries more personality than site chrome (nav, buttons, hero copy): a dry, understated joking aside is welcome once or twice an article, the way a raised eyebrow reads, not a punchline. It still skips exclamation marks, emoji and profanity, and never comes at a reader's expense.
 - Spell résumé with its accents. Dates read `14 Mar 2026` in eyebrows and `14 March 2026` in article meta. Reading time reads `6 min read`.
 - Project names are single capitalised words (Tallyho, Gridwork). Hostnames, filenames and code are lowercase and set in mono.
 

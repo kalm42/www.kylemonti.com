@@ -1,21 +1,13 @@
 ---
-slug: /how-to-rename-a-destructed-variable
-date: 2019-09-22T16:50:21.663Z
-title: How to rename a destructed variable
-templateKey: blog-post
-thumbnail: /img/how-to-rename-a-destructed-variable.png
-thumbnailAlt: Macro shot of legos on the floor.
-description: How to rename a desctured variable.
-tags:
-  - brewing
-  - chemex
+title: How to rename a destructured variable
+date: 2019-09-22
+excerpt: Wes Bos's trick for renaming a property on the way out of a destructuring assignment.
+tags: JavaScript
 ---
 
-# How to rename a destructed variable
+This pattern comes from [Wes Bos's lesson on destructuring and renaming](https://wesbos.com/destructuring-renaming) — his tutorials are worth a look if this is useful to you.
 
-This example is shameless stolen from [Wes Bos](https://wesbos.com/destructuring-renaming). Seriously, go check it out, and buy a tutorial from him. They're awesome.
-
-The object we will destruct.
+The object to destructure:
 
 ```javascript
 const person = {
@@ -26,7 +18,7 @@ const person = {
 }
 ```
 
-Now to destructure it.
+Renaming a property while destructuring it just adds a colon and the new name:
 
 ```javascript
 const { facebook: fb, twitter: tweet } = person.social

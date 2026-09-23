@@ -1,29 +1,23 @@
 ---
-slug: /paginated-prisma-graphql
-date: 2020-07-26T21:51:35.742Z
-title: How to paginate a Prisma Graphql query with typescript
-templateKey: blog-post
-thumbnail: /img/how-to-paginate-a-prisma-graphql-query-with-typescript.png
-thumbnailAlt: A book open to roadmap with a pair of reading glasses resting on the open pages.
-description: How to paginate a thingy
-tags:
-  - brewing
-  - chemex
+title: How to paginate a Prisma GraphQL query with TypeScript
+date: 2020-07-26
+excerpt: Wrapping a Prisma-backed GraphQL query in a paginated type, with page metadata computed in the resolver.
+tags: Prisma, GraphQL, TypeScript
 ---
 
-TLDR; Add the meta data in the resolver and add a new type in graphql to return the meta data.
+The short version: add the metadata in the resolver, and add a new type in GraphQL to return it.
 
-I shamelessly am taking this from a post on Prisma's old forum [here](https://v1.prisma.io/forum/t/adding-pagination-to-lists-on-objects/4354/2). I'm going to go over it in a little more detail and since I use typescript my examples will be in typescript.
+This builds on [an old post from Prisma's community forum on adding pagination to lists](https://v1.prisma.io/forum/t/adding-pagination-to-lists-on-objects/4354/2), expanded here in more detail and ported to TypeScript.
 
-## Things to do:
+## Things to do
 
-- Add two new types to our graphql type definitions
-- Update the query graphql type definition
+- Add two new types to the GraphQL type definitions
+- Update the query's GraphQL type definition
 - Update the resolver
 
-## New Type Defs
+## New type defs
 
-For this example I'll use posts as the data we're returning.
+This example uses posts as the data being returned.
 
 ```graphql
 type Post {
@@ -46,51 +40,53 @@ type PaginatedPostsMeta {
 }
 ```
 
-You can see we add some types to wrap around our normal response of an array of posts.
+These wrap the normal array-of-posts response in a shape that also carries the pagination metadata.
 
 ## Update query
 
-We need to update the query definition to return the new model we just added.
+The query definition needs to return the new type instead of a bare array:
 
 ```graphql
 posts(page: Int!): PaginatedPosts!
 ```
 
-## Update Resolver
+## Update resolver
 
 ```typescript
 import { Prisma } from "../prisma/generated/prisma-client"
 
 interface PostsArgs {
-  page: number
+	page: number
 }
 
 interface Context {
-  db: Prisma
+	db: Prisma
 }
 
 function posts(parent, args: PostsArgs, ctx: Context) {
-  const { page } = args
-  const PAGE_SIZE = 10
-  const = {where: { isPublished: true }}
+	const { page } = args
+	const PAGE_SIZE = 10
+	const where = { where: { isPublished: true } }
 
-  return {
-    nodes: ctx.db.posts({
-      ...where,
-      orderBy: "createdAt_DESC",
-      first: PAGE_SIZE,
-      skip: page * PAGE_SIZE,
-    }),
-    meta: async () => {
-      const count = await ctx.db.templatesConnection(where).aggregate().count()
+	return {
+		nodes: ctx.db.posts({
+			...where,
+			orderBy: "createdAt_DESC",
+			first: PAGE_SIZE,
+			skip: page * PAGE_SIZE,
+		}),
+		meta: async () => {
+			const count = await ctx.db.postsConnection(where).aggregate().count()
 
-      return {
-        nodeCount: count,
-        pageCount: Math.ceil(count / PAGE_SIZE),
-        pageCurrent: (page * PAGE_SIZE) / PAGE_SIZE,
-        nodesPerPage: PAGE_SIZE,
-      }
-    }
-  }
+			return {
+				nodeCount: count,
+				pageCount: Math.ceil(count / PAGE_SIZE),
+				pageCurrent: (page * PAGE_SIZE) / PAGE_SIZE,
+				nodesPerPage: PAGE_SIZE,
+			}
+		},
+	}
 }
 ```
+
+`nodes` runs the actual paginated query, and `meta` runs alongside it as its own resolver, using the same `where` clause to count the full set and work out how many pages it spans.

@@ -1,92 +1,84 @@
 ---
-slug: /how-to-make-a-css-gradient
-templateKey: blog-post
-title: How to Make a CSS Gradient
-description: Various ways to make CSS gradients. Copy/Paste ready.
-tags:
-  - brewing
-  - chemex
-thumbnail: /img/how-to-make-a-css-gradient.png
-thumbnailAlt: Bright colors of a hot air baloon.
-date: 2019-04-30T15:04:10.000Z
+title: How to make a CSS gradient
+date: 2019-04-30
+excerpt: A copy-paste reference for linear-gradient — direction, midpoints, multiple stops, and hard edges instead of blends.
+tags: CSS
 ---
 
-# How to Make a CSS Gradient
+![How to make a CSS gradient](/img/how-to-make-a-css-gradient.png)
 
-![How to make a CSS Gradient](images/2019-04-30-how-to-make-a-css-gradient.png)
+The simple top-to-bottom gradient.
 
-The super simple top to bottom gradient.
-
-```
+```css
 .linear-gradient {
-  background: linear-gradient(#F23847, #F23847);
+	background: linear-gradient(#f23847, #400711);
 }
 ```
 
-Change the midpoint of the gradient.
+Move the midpoint of the gradient with a color hint between the two stops.
 
-```
+```css
 .linear-gradient {
-  background: linear-gradient(#F23847, 10%, #F23847);
+	background: linear-gradient(#f23847, 10%, #400711);
 }
 ```
 
-Change the direction of the gradient. First, from left to right.
+Change direction: left to right.
 
-```
+```css
 .linear-gradient {
-  background: linear-gradient(to right, #F23847, #F23847);
+	background: linear-gradient(to right, #f23847, #400711);
 }
 ```
 
-From left to right.
+Right to left.
 
-```
+```css
 .linear-gradient {
-  background: linear-gradient(to left, #F23847, #F23847);
+	background: linear-gradient(to left, #f23847, #400711);
 }
 ```
 
-Diagonal. Holy moly.
+Diagonal.
 
-```
+```css
 .linear-gradient {
-  background: linear-gradient( to bottom right, #F23847, #F23847);
+	background: linear-gradient(to bottom right, #f23847, #400711);
 }
 ```
 
-With numbers now!
+The same directions work in degrees, too.
 
-```
+```css
 .linear-gradient {
-  background: linear-gradient(45deg, #F23847, #F23847);
+	background: linear-gradient(45deg, #f23847, #400711);
 }
 ```
 
-More than one color. Holy fuck! Watch out now.
+More than two colors.
 
-```
+```css
 .linear-gradient {
-  background: linear-gradient(#F23847, #F23847, #F2BBBF, #400711, #F28888);
+	background: linear-gradient(#f23847, #f2bbbf, #400711, #f28888);
 }
 ```
 
-Time to get ridiculous.
+Position each stop precisely, mixing units.
 
-```
+```css
 .linear-gradient {
-  background: linear-gradient(45deg, #F23847 28px, #F23847 10%, #F2BBBF 0.33rem, #400711 calc(1vw), #F28888);
+	background: linear-gradient(45deg, #f23847 28px, #f2bbbf 10%, #400711 0.33rem, #f28888 calc(1vw), #f23847);
 }
 ```
 
-Hard lined gradients. Why? Because fuck it why not?
+Give each color a range instead of a single point, and the blend disappears — hard edges instead.
 
-```
+```css
 .linear-gradient {
-  background: linear-gradient(#F23847 20%, #F23847 20% 40%, #F2BBBF 40% 60%, #400711 60% 80%, #F28888 80%);
+	background: linear-gradient(#f23847 20%, #f2bbbf 20% 40%, #400711 40% 60%, #f28888 60% 80%, #f23847 80%);
 }
 ```
 
 ## Resources
 
-- [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Images/Using_CSS_gradients)
+- [Using CSS gradients — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Images/Using_CSS_gradients)

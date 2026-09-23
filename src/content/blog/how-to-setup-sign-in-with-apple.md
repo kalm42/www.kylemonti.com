@@ -1,59 +1,41 @@
 ---
-templateKey: blog-post
-title: How to Setup Sign in with Apple
-description: I have a nextjs app with next-auth and you're coming along the ride
-  of setting up Sign in with Apple oauth.
-tags:
-  - next
-  - nextjs
-  - react
-  - reverseproxy
-  - nginx
-  - apple
-  - sign-in-with-apple
-  - oauth
-  - jwt
-thumbnail: /img/how-to-setup-signin-with-apple.png
-thumbnailAlt: Theatrical detective with the title text
-slug: how-to-setup-signin-with-apple
-date: 2022-02-20T17:35:36.756Z
+title: How to set up Sign in with Apple
+date: 2022-02-20
+excerpt: A full walkthrough of wiring next-auth's Apple provider into a Next.js app — registering IDs with Apple, generating the JWT client secret, and running a local nginx proxy over HTTPS for testing.
+tags: Next.js, Apple, OAuth
 ---
 
-Here before you is a record of how I configured sign in with Apple for a side project I have. This, like all my posts, is a record for myself so that I can find everything again. There are a lot of links in here. I strive to cite all my sources. I don't know this stuff off the top of my head so I will show you where I got everything from.
+I configured Sign in with Apple for a side project recently, and this is the record of how — like most of what I write here, mainly so I can find it again. There are a lot of links below; I've tried to cite where each piece came from, since none of this was familiar to me going in.
 
-## Front end-ish setup
+## Front-end setup
 
-Install next-auth. Yeah, I know. I'm not a fan of grabbing some dependency to solve an issue but in this case it makes things a lot easier. At least I think it did.
+Install next-auth:
 
 ```zsh
 npm install next-auth
 ```
 
-This package should automate a lot of the oauth 2.0 / oidc processes for us. Still we have a lot of pieces to put into place.
+Pulling in a dependency isn't usually my first instinct for something like this, but it automates enough of the OAuth 2.0 / OIDC handshake to be worth it. There's still plenty left to wire up by hand.
 
-We're going to assume for now that this will work and start using the session data in the front end. We're doing this for a couple reasons. One is to test that it works. The other is because we'll have to do it at some point anyway.
+Session data gets used on the front end early — partly to confirm the setup works, partly because it needs to happen eventually anyway. Exposing session and auth data to the front end starts with `_app.tsx`:
 
-To expose session and auth data to the front end so we start with `_app.tsx` (yes, typescript we're not monsters).
-
-```typescript
-// pages/_app.tsx
-import { SessionProvider } from "next-auth/react";
-import "../styles/globals.css";
-import type { AppProps } from "next/app";
+```typescript title="pages/_app.tsx"
+import { SessionProvider } from "next-auth/react"
+import "../styles/globals.css"
+import type { AppProps } from "next/app"
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
-  return (
-    <SessionProvider session={session}>
-      <Component {...pageProps} />
-    </SessionProvider>
-  );
+	return (
+		<SessionProvider session={session}>
+			<Component {...pageProps} />
+		</SessionProvider>
+	)
 }
 ```
 
-To have the back end respond to sign in, sign out, and oauth callbacks create this file.
+The back end needs a route to respond to sign in, sign out, and the OAuth callback:
 
-```typescript
-// pages/api/auth/[...nextauth].ts
+```typescript title="pages/api/auth/[...nextauth].ts"
 import NextAuth from "next-auth"
 import AppleProvider from "next-auth/providers/apple"
 
@@ -67,81 +49,70 @@ export default NextAuth({
 })
 ```
 
-Edit your `.env.local` file. You need to add an `APPLE_CLIENT_ID` and `APPLE_CLIENT_SECRET`.
+Then add `APPLE_CLIENT_ID` and `APPLE_CLIENT_SECRET` to `.env.local`:
 
-```
+```text title=".env.local"
 APPLE_CLIENT_ID=
 APPLE_CLIENT_SECRET=
 ```
 
-## Getting The Client Id and Secret
+## Getting the client ID and secret
 
-This is the first big hurdle. Now we need our Apple client id, and a secret. We have to get that from Apple. So go sign up for an Apple Developer account and pay our lord and master oh Apple their $99 a year taxes for our pleasure of being able to use their api's.
+This is the first real hurdle: getting a client ID and secret from Apple, which means signing up for an Apple Developer account — currently $99 a year — to use their APIs. [Instructions for enrolling are here](https://developer.apple.com/programs/enroll/); do that, then come back.
 
-Instructions on how to enroll can be found [here](https://developer.apple.com/programs/enroll/). Do that then come back here.
+### After you've signed up
 
-### You've signed up
+Apple's naming is confusing in a specific way worth flagging up front: what next-auth calls the "client ID" is what Apple calls the services ID. To create a services ID, Apple requires it to belong to an application, so the first step is registering an app ID — not a full iOS or macOS app, just a placeholder for one.
 
-Hey! You made it. Awesome! Now the fun-steration begins.
-
-You have no idea how insane this name change thing made me. When you see "client id" from the Authentication perspective they mean the service id from the Apple point of view. If you don't understand that's fine, we're about to dive into this cluster.
-
-To make a Service ID it must be a service for an application so you must first make an Application. Don't worry we're not making a full blown iOS/MacOS application. We're just making a kinda placeholder for one.
-
-### Register App ID
+### Register an app ID
 
 - Go to [Certificates, Identifiers & Profiles](https://developer.apple.com/account/resources)
 - Go to Identifiers
-- Ensure you're on App IDs
-- Add a new one.
-- Type is App
-- Register
-  - Description: You know what this is.
-  - App ID: Use reverse domain style. aka `com.example`
-  - Check sign in with apple
-  - Edit
-    - Enable as primary App ID
-    - Add notification endpoint `https://www.example.com/api/auth/apple/`
+- Confirm you're on App IDs
+- Add a new one
+- Set the type to App
+- Register it:
+  - Description: whatever describes the app
+  - App ID: reverse-domain style, e.g. `com.example`
+  - Check "Sign in with Apple"
+  - Edit:
+    - Enable as the primary app ID
+    - Add a notification endpoint: `https://www.example.com/api/auth/apple/`
 
-### Register Services ID aka Client ID
+### Register a services ID (the client ID)
 
-Still in that "Certificates, Identifiers & Profiles" on the left menu go to Identifiers, on the right drop down choose Services ID. Make a new identifier.
+Still under Certificates, Identifiers & Profiles, go to Identifiers, switch the dropdown to Services IDs, and make a new identifier.
 
-Description: You know what to do.
-Identifier: reverse domain style `com.example.client`
+- Description: whatever describes it
+- Identifier: reverse-domain style, e.g. `com.example.client`
 
-Enable Sign in with Apple. Click configure.
+Enable Sign in with Apple, then click Configure. The part that isn't obvious here: the Domains field takes only the bare domain — `example.com`, not `https://www.example.com`. The return URL for next-auth is `https://www.example.com/api/auth/callback/apple`.
 
-Now here's the that they don't tell you. Domains gets only the domain. No protocol. Not `https://www.example.com` but `example.com`. The return url for next-auth is `https://www.example.com/api/auth/callback/apple`.
+That identifier is the client ID. Add it to `.env.local`:
 
-Now you have the first part. You have the client id. Update your `.env.local` file with the client id aka service id.
-
-```
+```text
 APPLE_CLIENT_ID=com.example.client
 ```
 
 ### Verify your domain with Apple
 
-**You might not have to do this step.** Let me know on twitter or make a PR for this post if you don't. In my trial/error process I did this so I'm leaving it in just in case it was necessary.
+This step may not be necessary for every setup — I hit it during trial and error, so I'm leaving it in in case it applies to you too.
 
-From the Identifiers screen change from AppID to Merchant. Add a new merchant. Same process. You know what a description is and the same reverse domain style. Yes it needs to be unique, maybe `com.example.merchant`.
+From the Identifiers screen, switch from App IDs to Merchant IDs and add a new one, following the same reverse-domain pattern (it needs to be unique, e.g. `com.example.merchant`). Follow Apple's instructions to verify it, which requires the Next.js project to already be live on the web.
 
-Follow the instructions to verify. To complete this your nextjs project must be live on the web. I was trying to avoid this but /shrug/.
+### Get a key from Apple
 
-### Get key from apple
+Under Certificates, Identifiers & Profiles, go to Keys, add a new key, give it a description, associate it with the app, check "Sign in with Apple," and download the key.
 
-On the Certificates, Identifiers & Profiles click Keys. Add a new key. Give it a good description. Associate it with your app. Check Sign in with Apple. Download the key.
+Treat this file carefully, and don't commit it to git — it gets used in the next step.
 
-Guard this key with your frickin' life. Ok it's not that serious, but like don't commit it into git. Follow the Gandalf protocol. Keep it secret; keep it safe. You're going to use it in a second.
+### Generate the Apple client secret
 
-### Apple Client Secret
+Apple requires the client secret to be a JWT — [their docs say so directly](https://next-auth.js.org/providers/apple). A [JSON Web Token](https://jwt.io/) is an open standard for representing claims between two parties. Worth noting: "secure" here is relative — a JWT isn't inherently more trustworthy than any other bearer token, and sensitive data shouldn't be stored in one.
 
-"Apple requires the client secret to be a JWT." [Source](https://next-auth.js.org/providers/apple) If you don't know - A [**J**SON **W**eb **T**oken](https://jwt.io/) is an open industry standard method for representing claims securely between two parties. As a side note, the "secure" part of that shouldn't be relied on heavily. In general do not consider JWTs to be secure. Do not store sensitive data in one. Are they more secure than a cookie. Maybe, there's some debate on that but we're not here for that.
+[Apple documents how to build the client secret here](https://developer.apple.com/documentation/sign_in_with_apple/generate_and_validate_tokens#3262048). Since JWTs expire, generating one is worth scripting rather than doing by hand every few months:
 
-There are instructions [here](https://developer.apple.com/documentation/sign_in_with_apple/generate_and_validate_tokens#3262048) on how to create the client secret. JWTs expire that means we're going to have make this JWT over, and over again. To do this we're going to write a script to do this for us. Let me know if you know a way to automate this. It's a future improvement I'd like to make but don't want to waste a lot of energy to fix that right now.
-
-```javascript
-// apple-gen-secret.js
+```javascript title="apple-gen-secret.js"
 const nJwt = require("njwt")
 const dotenv = require("dotenv")
 const { createPrivateKey } = require("crypto")
@@ -153,9 +124,10 @@ const HOUR = 60 * MINUTE
 const DAY = 24 * HOUR
 const MONTH = 30 * DAY
 
-const privateKey = createPrivateKey(``) // Copy from the cert you downloaded from Apple
+const privateKey = createPrivateKey(``) // paste the key downloaded from Apple
 const now = Math.ceil(Date.now() / 1000)
 const expires = now + MONTH * 3
+const kid = process.env.APPLE_KEY_ID
 
 const claims = {
 	iss: process.env.APPLE_TEAM_ID,
@@ -171,86 +143,82 @@ jwt.header.kid = kid
 console.log(jwt.compact())
 ```
 
-This was cobbled together from [this gist](https://gist.github.com/balazsorban44/09613175e7b37ec03f676dcefb7be5eb) and [this blog post](https://developer.okta.com/blog/2018/11/13/create-and-verify-jwts-with-node). I went with the packages from the Okta blog post because Okta does authentication and if their employees vouch for nJwt that's good enough for me. To complete the script you're going to need to copy the key you got from Apple. Here's the command I used to do that.
+This is adapted from [a gist by Balázs Orbán](https://gist.github.com/balazsorban44/09613175e7b37ec03f676dcefb7be5eb) and [an Okta blog post on creating and verifying JWTs with Node](https://developer.okta.com/blog/2018/11/13/create-and-verify-jwts-with-node) — Okta does authentication for a living, so their choice of `njwt` was good enough for me.
+
+To finish the script, paste in the key downloaded from Apple. On macOS, this copies it to the clipboard:
 
 ```zsh
 pbcopy < ~/Downloads/AuthKey_THESE-CHARACTERS-ARE-IMPORTANT.p8
 ```
 
-I think pbcopy is short for Paste Bin Copy. Essentially it puts the contents of a text file into the clipboard. Now you can paste it into the `createPrivateKey(PASTE HERE)` line. Again, do not commit your key. It's here, temporarily just to run the script.
+`pbcopy` stands for pasteboard copy — macOS calls the clipboard the pasteboard. Paste the result into the `createPrivateKey()` call. Don't commit the key; it only needs to sit there long enough to run the script once.
 
-You see in the script that I've added another entry into the `.env.local` file.
+Two more values come from Apple: the key ID, used above as `APPLE_KEY_ID`, and the team ID. Both get added to `.env.local`:
 
+```text
+APPLE_KEY_ID=THE-KEY-ID-FROM-YOUR-KEY-FILENAME
+APPLE_TEAM_ID=THE-10-CHARACTERS-NEXT-TO-YOUR-NAME
 ```
-APPLE_TEAM_ID=THE-RANDOM-CHARACTERS-FROM-YOUR-KEY-FILE
-```
 
-Yes, those random characters from your key file. You can also find the characters next to your name in the Apple "Certificates, Identifiers & Profiles" page. It'll be something like `Your Name - 10CHARACTERS` (yes I know that's 12 just ignore that).
+Run the script with `node apple-gen-secret.js` — or add it to `package.json`'s scripts for later — then copy its output into `.env.local` as `APPLE_CLIENT_SECRET`.
 
-Run this script with `node apple-gen-secret.js` or add it to the `package.json` scripts section for future use. Either way, run the script. Copy the console output and paste it into `.env.local` as the value for `APPLE_CLIENT_SECRET`.
+#### JWT, claim by claim
 
-#### JWT Deep Dive
+Working through what the script actually sets, in order. First, the claims — the JWT's body:
 
-A longer explanation for the JWT steps in the script. In the order from the script.
+1. `iss` (issuer) — the 10 characters next to your name on [the certificates page](https://developer.apple.com/account/resources/certificates/list). You're the one issuing the JWT.
+2. `iat` (issued at) — when the client secret was generated, in seconds since the Unix epoch, in UTC. JavaScript timestamps are in milliseconds, hence dividing by 1000 and rounding.
+3. `exp` (expires) — the current timestamp plus three months, in seconds.
+4. `aud` (audience) — who the JWT is for: `https://appleid.apple.com`.
+5. `sub` (subject) — what it's about: the client ID, i.e. the services ID (`com.example.client`).
 
-1. iss - issuer: This is the 10 characters next to your name [here](https://developer.apple.com/account/resources/certificates/list). This is you. You are issuing the JWT.
+One more value goes in the header rather than the claims:
 
-2. iat - Issued at: registered claim indicates the time at which you generated the client secret, in terms of the number of _seconds_ since Epoch, in UTC. Seconds is important. Javascript makes timestamps in the number of milliseconds since Epoch. That's why we divide by 1000 and then round.
+6. `kid` (key ID) — which key signed the JWT. This is the 10 characters at the end of the filename of the key downloaded from Apple, and it's how Apple knows which key to verify the signature against.
 
-3. exp - Expires: We take the current time stamp in seconds and add 3 months of seconds to it.
+[JWT.io](https://jwt.io) is a good general reference for JWTs.
 
-4. aud - Audience: Who are you talking with. `https://appleid.apple.com` Apple, duh.
+### Last Next.js steps
 
-5. sub - Subject: What are we talking about. The client_id aka Services ID `com.example.client`.
+Next.js needs a couple more environment variables:
 
-Those are all apart of the claim aka body of the JWT. We need to adjust one thing in the JWT header.
-
-1. kid - Key ID. Which key was used to sign (aka encrypt) the JWT. This 10 characters on the end of the file name from the key you downloaded from apple. This will let Apple know how to decrypt the JWT.
-
-[JWT.io](https://jwt.io) is a great resource for JWTs.
-
-### Last NextJs steps
-
-NextJs want's a couple of environmental variable to be happy.
-
-```
+```text
 NEXTAUTH_URL=https://www.example.com
-NEXTAUTH_SECRET= // we're going to make this right now
+NEXTAUTH_SECRET=
 ```
 
-To make the NEXTAUTH_SECRET run this command.
+Generate `NEXTAUTH_SECRET` with:
 
 ```zsh
 openssl rand -base64 32
 ```
 
-Copy the output and paste it as the value for `NEXTAUTH_SECRET`.
+Copy the output in as the value. By this point, `.env.local` should have:
 
-Your `.env.local` file should now have these entries.
-
-```
+```text
 APPLE_CLIENT_ID=com.example.client
 APPLE_CLIENT_SECRET=THE-BIG-JWT-STRING
-APPLE_TEAM_ID=THE-10-Characters-next-to-your-name
+APPLE_KEY_ID=THE-KEY-ID-FROM-YOUR-KEY-FILENAME
+APPLE_TEAM_ID=THE-10-CHARACTERS-NEXT-TO-YOUR-NAME
 NEXTAUTH_URL=https://www.example.com
 NEXTAUTH_SECRET=WHAT-YOU-JUST-PASTED
 ```
 
 ## Server setup
 
-Per the [Next-Auth docs](https://next-auth.js.org/providers/apple) Apple requires a https connection. That means localhost or 0.0.0.0 is not going to work. But oh, we are programmers and we can wield magic (not magick). So we're going to edit our hosts file and make our localhost respond to our domain.
+Per the [next-auth docs](https://next-auth.js.org/providers/apple), Apple requires an HTTPS connection, so plain `localhost` or `0.0.0.0` won't work. The fix is editing the hosts file so a real-looking domain resolves to localhost.
 
-I’m only including the Mac/Linux instructions here because I don’t develop on windows. Windows is for games only.
+These are Mac/Linux instructions, since that's what I develop on.
 
-This is a two part process. I honestly should break this out into its own post.
+This is a two-part process — pointing a domain at localhost, then serving it over HTTPS — and could honestly be its own post.
 
 ```zsh
 sudo vi /etc/hosts
 ```
 
-You probably have something like this unless you've edited your hosts file before or Mac changes it.
+The file probably looks something like this, unless it's already been edited:
 
-```
+```text
 ##
 # Host Database
 #
@@ -262,126 +230,122 @@ You probably have something like this unless you've edited your hosts file befor
 ::1             localhost
 ```
 
-We need to add two lines. One for the IPv4 and the IPv6. Safari and Firefox require both for this to work.
+Add two lines — one for IPv4, one for IPv6. Safari and Firefox both need the IPv6 entry to work correctly:
 
-```
+```text
 127.0.0.1                example.com www.example.com
 0:0:0:0:0:FFFF:0A00:0117 example.com www.example.com
 ```
 
-Now if you go to example.com nothing will happen. But why?
+Visiting `example.com` still won't do anything yet, for a specific reason: the browser looks up `example.com` in the hosts file, finds an IP address, and requests it over the default port for the scheme — 443 for HTTPS, 80 for HTTP. So `https://www.example.com` becomes equivalent to `https://127.0.0.1:443` — and `https://127.0.0.1:443` is never valid, because a browser won't trust a TLS certificate for `localhost` as secure. Editing the hosts file to use a real-looking domain is what makes the `s` in `https` possible at all.
 
-When your computer attempts to go to `https://www.example.com` it looks at the hosts file, sees an ip address for it and requests the html from that ip address at the default port `443` for https, and `80` for http. That is `https://www.example.com` is now the same as `https://127.0.0.1:443`.
+The app itself is still only running at `http://localhost:3000` (`http://127.0.0.1:3000`). What's missing is a local server listening on ports 80 and 443 that reverse-proxies to port 3000.
 
-A side note, we do this because `https://127.0.0.1:443` is always invalid. Localhost cannot be secure, ever, so the browser does not let you do `https://127.0.0.1:443` you must edit the hosts file to get the 's'.
+### Set up nginx as a local reverse proxy
 
-Back to the point. Your application is running at `http://localhost:3000` aka `http://127.0.0.1:3000`. We need to setup a local server watching ports 80 and 443 and reverse proxy those ports to port 3000 so our application can respond to requests.
-
-### Setting up Nginx as a local reverse proxy
-
-I found [this blog post](https://kirillplatonov.com/posts/simple-reverse-proxy-on-mac-with-nginx/) that helped me. Here are the steps from that post that I followed.
+[This post on running a simple reverse proxy on Mac with nginx](https://kirillplatonov.com/posts/simple-reverse-proxy-on-mac-with-nginx/) covers the steps that worked for me.
 
 ```zsh
 brew install nginx
 ```
 
-After a while you have nginx installed. Now we need to start the service.
+Once that finishes, start the service:
 
 ```zsh
 brew services start nginx
 ```
 
-Yay. You now have nginx installed, and the service running. Now to configure it to reverse proxy from a domain to localhost. To do that we need to edit the `nginx.conf` file. Let's find out where it is.
+With nginx installed and running, the next step is pointing it at localhost — which means editing `nginx.conf`. First, find where it actually lives:
 
 ```zsh
 nginx -t
-// Output
-// nginx: the configuration file /opt/homebrew/etc/nginx/nginx.conf syntax is ok
-// nginx: configuration file /opt/homebrew/etc/nginx/nginx.conf test is successful
 ```
 
-The file location from the blog post does not match my install and many other websites had it wrong too. So use that command to find out where yours is. Maybe it's in the same spot from the blog, maybe not. Let's duplicate the file just in case we blow something up we can reset.
+```text
+nginx: the configuration file /opt/homebrew/etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /opt/homebrew/etc/nginx/nginx.conf test is successful
+```
+
+The path in the post above didn't match my install, and neither did several other guides — better to just ask nginx directly. Duplicate the file first, in case anything needs to be reset:
 
 ```zsh
 cp /opt/homebrew/etc/nginx/nginx.conf /opt/homebrew/etc/nginx/nginx.backup.conf
 ```
 
-[This gist](https://gist.github.com/unixcharles/949271) was very useful in updating the nginx config. I don't like copying full config files I much rather pick and choose which lines I update. For brevity I have removed all the comments from the conf file.
+[This gist](https://gist.github.com/unixcharles/949271) was useful for the config itself. Rather than copy a full file wholesale, here's the version I ended up with, comments stripped for brevity:
 
-```
-# /opt/homebrew/etc/nginx/nginx.conf
+```nginx title="nginx.conf"
 worker_processes  1;
 
 events {
-    worker_connections  1024;
+	worker_connections  1024;
 }
 
-
 http {
-    include       mime.types;
-    default_type  application/octet-stream;
+	include       mime.types;
+	default_type  application/octet-stream;
 
-    sendfile        on;
+	sendfile        on;
 
-    keepalive_timeout  65;
+	keepalive_timeout  65;
 
-    server {
-        listen       80;
-        server_name  localhost;
+	server {
+		listen       80;
+		server_name  localhost;
 
-        location / {
-	    proxy_pass          http://localhost:3000;
-            proxy_set_header    Host              $host;
-	    proxy_set_header    X-Real-IP         $remote_addr;
-            proxy_set_header    X-Forwarded-For   $proxy_add_x_forwarded_for;
-	    proxy_set_header    X-Client-Verify   SUCCESS;
-	    proxy_set_header    X-Client-DN       $ssl_client_s_dn;
-	    proxy_set_header    X-SSL-Subject     $ssl_client_s_dn;
-	    proxy_set_header    X-SSL-Issuer      $ssl_client_i_dn;
-	    proxy_set_header    X-Forwarded-Proto http;
-	    proxy_read_timeout 1800;
-	    proxy_connect_timeout 1800;
-        }
+		location / {
+			proxy_pass          http://localhost:3000;
+			proxy_set_header    Host              $host;
+			proxy_set_header    X-Real-IP         $remote_addr;
+			proxy_set_header    X-Forwarded-For   $proxy_add_x_forwarded_for;
+			proxy_set_header    X-Client-Verify   SUCCESS;
+			proxy_set_header    X-Client-DN       $ssl_client_s_dn;
+			proxy_set_header    X-SSL-Subject     $ssl_client_s_dn;
+			proxy_set_header    X-SSL-Issuer      $ssl_client_i_dn;
+			proxy_set_header    X-Forwarded-Proto http;
+			proxy_read_timeout 1800;
+			proxy_connect_timeout 1800;
+		}
 
-        error_page   500 502 503 504  /50x.html;
-        location = /50x.html {
-            root   html;
-        }
-    }
+		error_page   500 502 503 504  /50x.html;
+		location = /50x.html {
+			root   html;
+		}
+	}
 
-    server {
-        listen       443 ssl;
-        server_name  localhost;
+	server {
+		listen       443 ssl;
+		server_name  localhost;
 
-        ssl_certificate      server.crt;
-        ssl_certificate_key  server.key;
-	ssl_dhparam          server.pem;
+		ssl_certificate      server.crt;
+		ssl_certificate_key  server.key;
+		ssl_dhparam          server.pem;
 
-        ssl_session_timeout  5m;
+		ssl_session_timeout  5m;
 
-	ssl_protocols  SSLv2 SSLv3 TLSv1;
-        ssl_ciphers  ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP;
-        ssl_prefer_server_ciphers  on;
+		ssl_protocols  SSLv2 SSLv3 TLSv1;
+		ssl_ciphers  ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP;
+		ssl_prefer_server_ciphers  on;
 
-        location / {
-	    proxy_pass          http://localhost:3000;
-            proxy_set_header    Host              $host;
-            proxy_set_header    X-Real-IP         $remote_addr;
-            proxy_set_header    X-Forwarded-For   $proxy_add_x_forwarded_for;
-            proxy_set_header    X-Client-Verify   SUCCESS;
-            proxy_set_header    X-Client-DN       $ssl_client_s_dn;
-            proxy_set_header    X-SSL-Subject     $ssl_client_s_dn;
-            proxy_set_header    X-SSL-Issuer      $ssl_client_i_dn;
-            proxy_set_header    X-Forwarded-Proto http;
-            proxy_read_timeout 1800;
-            proxy_connect_timeout 1800;
-        }
-    }
-    include servers/*;
+		location / {
+			proxy_pass          http://localhost:3000;
+			proxy_set_header    Host              $host;
+			proxy_set_header    X-Real-IP         $remote_addr;
+			proxy_set_header    X-Forwarded-For   $proxy_add_x_forwarded_for;
+			proxy_set_header    X-Client-Verify   SUCCESS;
+			proxy_set_header    X-Client-DN       $ssl_client_s_dn;
+			proxy_set_header    X-SSL-Subject     $ssl_client_s_dn;
+			proxy_set_header    X-SSL-Issuer      $ssl_client_i_dn;
+			proxy_set_header    X-Forwarded-Proto http;
+			proxy_read_timeout 1800;
+			proxy_connect_timeout 1800;
+		}
+	}
+	include servers/*;
 }
 ```
 
-If you copy and paste this in it will still not work. We need to make the SSL certificates. I used some of the commands [found here](https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-on-debian-10). I will repeat them here so you don't have to guess.
+That config alone won't work yet — it still needs real SSL certificates. [These commands, from a DigitalOcean tutorial on self-signed certificates](https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-on-debian-10), generate the certificate and its private key:
 
 ```zsh
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
@@ -389,22 +353,22 @@ sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 -out /opt/homebrew/etc/nginx/server.crt
 ```
 
-This will make our certificate and the private key for it. The original file referenced a `.pem` file which appears to be a Diffie-Hellman related file. To make that file, because why not, use this command.
+The config also references a `.pem` file for Diffie-Hellman parameters, generated with:
 
 ```zsh
 sudo openssl dhparam -out /opt/homebrew/etc/nginx/server.pem 4096
 ```
 
-Now everything should be in place. Run this to test the config file.
+Test the config:
 
 ```zsh
 nginx -t
 ```
 
-No errors? Good. Restart nginx for it to take effect.
+If that comes back clean, restart nginx to pick up the changes:
 
 ```zsh
 nginx -s reload
 ```
 
-Now you should be good to go.
+From there, Sign in with Apple should work end to end against the local domain.

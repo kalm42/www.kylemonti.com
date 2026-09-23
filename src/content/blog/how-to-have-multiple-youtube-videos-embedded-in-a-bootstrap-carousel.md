@@ -1,34 +1,21 @@
 ---
-templateKey: blog-post
-title: How to have multiple YouTube video's embedded in a Bootstrap Carousel
-description: A friend reached out to me for assistance with the JavaScript on
-  this. I thought I would share the final code and how it works so that others
-  could use it. I want a slideshow with multiple YouTube videos. When the user
-  is on a slide that is showing a YouTube video the video should play and no
-  other video should be playing. When the user is on a slide without a video
-  then no video should be playing.
-tags:
-  - bootstrap
-thumbnail: /img/bootstrap-carousel.png
-thumbnailAlt: People enjoying a carousel.
-slug: how-to-have-multiple-youtube-videos-embedded-in-a-bootstrap-carousel
-date: 2021-03-01T01:17:49.820Z
+title: How to have multiple YouTube videos embedded in a Bootstrap carousel
+date: 2021-03-01
+excerpt: A Bootstrap carousel that mixes image slides with YouTube video slides, playing only the video on the current slide and pausing everything else.
+tags: Bootstrap, JavaScript
 ---
 
-A friend reached out to me for assistance with the JavaScript on this. I thought I would share the final code and how it works so that others could use it.
+A friend asked me for help with the JavaScript behind this, and the final version seemed worth sharing.
 
-## The Ask
+## The ask
 
-I want a slideshow with multiple YouTube videos. When the user is on a slide that is showing a YouTube video the video should play and no other video should be playing. When the user is on a slide without a video then no video should be playing.
+Build a slideshow with multiple YouTube videos. Whichever slide is showing a video should play it, and no other video should be playing — including when the current slide has no video at all. That last part sounds obvious, but a spec that states the edge cases plainly is easier to build against than one that doesn't.
 
-Some of that might seem silly to state but it is important to clearly state everything that software should do and how it should act.
+## The solution
 
-## The Solution
+First, the HTML for the slides.
 
-First the HTML for the slides.
-
-```html
-<!-- index.html -->
+```html title="index.html"
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -87,9 +74,7 @@ First the HTML for the slides.
 </html>
 ```
 
-Pretty basic HTML. We import some styling, jquery, popper, and lastly our JavaScript. The Bootstrap carousel is all standard. The interesting bits are the two YouTube video containers.
-
-Here are the interesting bits.
+Pretty basic HTML — styling, jQuery, Popper, and our own script, imported in order. The carousel itself is standard Bootstrap. The interesting part is the two video containers:
 
 ```html
 <div class="carousel-video-inner embed-responsive embed-responsive-16by9">
@@ -97,10 +82,9 @@ Here are the interesting bits.
 </div>
 ```
 
-It is important that all the video placeholders have the same class and have a [`data-`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*) attribute. That's what we're going to use to get the video id from the element. Lastly they must have a unique `id`.
+Every video placeholder needs the same class, a [`data-`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*) attribute holding the YouTube video ID, and a unique `id`.
 
-```javascript
-// index.js
+```javascript title="index.js"
 const videos = []
 const tag = document.createElement("script")
 const firstScriptTag = document.getElementsByTagName("script")[0]
@@ -149,28 +133,12 @@ $(function () {
 })
 ```
 
-First we make an array to hold references to the videos so that we can interact with them later.
+A `videos` array holds a reference to every player so the rest of the script can control them later.
 
-Secondly we use JavaScript to add the YouTube iframe api to the DOM. We use JavaScript to ensure that JavaScript is enabled. If JavaScript isn't enabled, this doesn't run and the script isn't downloaded saving an unnecessary call.
+The first few lines inject the YouTube iframe API by writing a `<script>` tag with JavaScript rather than putting it directly in the HTML — that way, a visitor with JavaScript disabled never downloads a script they can't use.
 
-When the page is loaded the iframe api gets added to the DOM, the variables, and the functions are read by the interpreter into memory including the immediately invoked function expression (IIFE). The IIFE registers a callback function for when the bootstrap carousel slide changes.
+Once the page loads, that injected script finishes loading and calls `onYouTubeIframeAPIReady`. That function walks every slide, image and video alike, looking for a `.video-player` element inside it. A slide without one gets `undefined` back from the query and is skipped. A slide with one gets a real DOM node — a truthy value — and only then does the code check that the node actually carries a `dataset`, which it will as long as the `data-` attribute is there.
 
-Then the YouTube iframe api will finish loading and it will run the `onYouTubeIframeAPIReady` function. That function gathers all of the slides video and non-video alike.
+For each match, a small helper turns the node's `id` and `data-video-id` into a real `YT.Player` instance, and the player gets pushed onto `videos` alongside the index of the slide it belongs to — so by the time the page has finished loading, every video placeholder has become a working player, and `videos` knows exactly which slide each one lives on.
 
-Then it loops over each slide. On each slide it does a scoped query for a video. If there's a video then the variable is a reference to that node. If there isn't a video then the variable is undefined.
-
-Undefined is a falsy value so the if statement will not be run and we would move on to the next slide. If there is a video, a node reference is a truthy value so the jit compiler would proceed to check if that node reference had a dataset attached to it. If there is, because you remembered to add the `data-` attribute, then the if statement is ran.
-
-We pass to a small helper function an object with two properties. `id` and `videoId`. We get that information from the video DOM node. That function returns a reference to the new player instance created.
-
-We take the player reference and the index of the slide array the player relates to and add them as attributes of an object to the videos array. This gives us an array of all videos, and the slide number that video is in.
-
-Remember this is all done as the page is loading. So now that the video placeholders have been swapped out for the iframes and we have a collection of them we can look at what happens when a user changes the slide.
-
-This is all handled by the IIFE at the bottom. The first thing it does when the slide changes is make sure all videos are _not_ playing. The `theBigPause` function loops through our videos array grabs the reference to the video player and programmatically pauses the video.
-
-The next thing it does is get the index number of the slide we're going to.
-
-Then we filter our videos array to find the one with the matching index. If the slide we're going to has a video then the filter will return an array with 1 entry otherwise the array will be empty. This means our video variable will be either undefined (no video) or defined (has a video). Defined is a truthy value and undefined is a falsy value. If it's defined we play the video otherwise there's nothing to do and we can exit the function.
-
-That's it. I hope that helps. Give me a shout-out on twitter if it did. @kalm42
+From there, the last block handles what happens when the slide changes. `theBigPause` runs first and pauses every player unconditionally. Then the handler reads the index of the slide being switched to and filters `videos` down to the one entry with a matching index. If the target slide has no video, that filter comes back empty and there's nothing left to do; if it does, the matching player's `playVideo` gets called.
