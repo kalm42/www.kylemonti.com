@@ -3,6 +3,7 @@ import Icon from "~/components/Icon"
 import TagList from "~/components/TagList"
 import Heading from "./ui/heading"
 import Paragraph from "./ui/paragraph"
+import Stack from "./ui/stack"
 
 const statusDotStyles = cva("h-2 w-2 shrink-0 rounded-full", {
 	variants: {
@@ -59,18 +60,18 @@ function ProjectCard(props: ProjectCardProps) {
 					</span>
 				</span>
 			</span>
-			<div className='flex flex-col gap-1'>
+			<Stack gap='1'>
 				<Heading size='lg'>{name}</Heading>
 				<Paragraph variant='mono'>{host}</Paragraph>
-			</div>
+			</Stack>
 			<Paragraph variant='muted'>{description}</Paragraph>
-			<div className='flex items-center justify-between gap-3'>
+			<Stack direction='row' gap='3' className='items-center justify-between'>
 				<span className='inline-flex items-center gap-2 font-text text-caption text-ink-muted'>
 					<span className={statusDotStyles({ status })} />
 					{status}
 				</span>
 				<TagList tags={tags} variant='project' limit />
-			</div>
+			</Stack>
 		</a>
 	)
 }

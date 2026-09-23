@@ -7,7 +7,10 @@ import SectionHeading from "~/components/SectionHeading"
 import SiteFooter from "~/components/SiteFooter"
 import TagList from "~/components/TagList"
 import TextLink from "~/components/TextLink"
+import Container from "~/components/ui/container"
 import Heading from "~/components/ui/heading"
+import Main from "~/components/ui/main"
+import Stack from "~/components/ui/stack"
 import Paragraph from "~/components/ui/paragraph"
 import { FOOTER_ELSEWHERE, NAV_ITEMS } from "~/shared/navigation"
 import { SITE_NAME, SITE_OG_IMAGE_PATH, SITE_URL } from "~/shared/site"
@@ -107,12 +110,10 @@ export default function Resume() {
 				<meta property='og:url' content={`${SITE_URL}/resume`} />
 			</Head>
 
-			<div className='print:hidden'>
-				<NavBar items={NAV_ITEMS} current='/resume' />
-			</div>
+			<NavBar items={NAV_ITEMS} current='/resume' />
 
-			<main className='max-w-page mx-auto my-0 py-0 px-gutter-wide print:px-0'>
-				<section className='flex flex-col gap-6 px-gutter pt-10 pb-9 md:px-gutter-wide print:px-0 print:pt-0'>
+			<Main>
+				<Container as='section' width='full' gap='6' space='hero' print>
 					<div>
 						<p className='font-text text-eyebrow text-brass-ink uppercase mt-reveal'>{CURRENT_ROLE}</p>
 						<Heading variant='display' size='lg' className='mt-reveal'>
@@ -122,7 +123,7 @@ export default function Resume() {
 					<Paragraph variant='muted' className='max-w-prose mt-reveal'>
 						{SUMMARY}
 					</Paragraph>
-					<div className='mt-reveal flex flex-wrap items-center gap-x-4 gap-y-2 font-text text-ui text-ink-muted'>
+					<Stack direction='wrap' className='items-center gap-x-4 gap-y-2 font-text text-ui text-ink-muted mt-reveal'>
 						<span>{LOCATION}</span>
 						<span aria-hidden>·</span>
 						<TextLink href={`mailto:${EMAIL}`}>{EMAIL}</TextLink>
@@ -130,43 +131,41 @@ export default function Resume() {
 						<TextLink href={LINKEDIN_URL} external>
 							LinkedIn
 						</TextLink>
-					</div>
+					</Stack>
 					<div className='mt-reveal print:hidden'>
 						<Button icon='download' onClick={printPage}>
 							Download PDF
 						</Button>
 					</div>
-				</section>
+				</Container>
 
-				<div className='px-gutter md:px-gutter-wide print:px-0'>
+				<Container width='full' print>
 					<Ornament />
-				</div>
+				</Container>
 
-				<section className='mx-auto flex w-full max-w-page flex-col gap-4 px-gutter py-9 md:px-gutter-wide print:px-0 print:py-6'>
+				<Container as='section' gap='4' space='section' print>
 					<SectionHeading eyebrow='Experience' title='Where I’ve worked' />
-					<div className='flex flex-col'>
+					<Stack>
 						{EXPERIENCE.map((entry) => (
 							<ResumeEntry key={`${entry.org}-${entry.period}`} {...entry} />
 						))}
-					</div>
-				</section>
+					</Stack>
+				</Container>
 
-				<section className='mx-auto flex w-full max-w-page flex-col gap-6 px-gutter pb-9 md:px-gutter-wide print:px-0 print:py-6'>
+				<Container as='section' gap='4' space='section' print>
 					<SectionHeading eyebrow='Education' title='Education' />
-					<div className='flex flex-col'>
+					<Stack>
 						<ResumeEntry {...EDUCATION} />
-					</div>
-				</section>
+					</Stack>
+				</Container>
 
-				<section className='mx-auto flex w-full max-w-page flex-col gap-6 px-gutter pb-10 md:px-gutter-wide print:px-0 print:py-6'>
+				<Container as='section' gap='6' space='tail-lg' print>
 					<SectionHeading eyebrow='Toolkit' title='Skills & tools' />
 					<TagList tags={SKILLS} />
-				</section>
-			</main>
+				</Container>
+			</Main>
 
-			<div className='print:hidden'>
-				<SiteFooter nav={NAV_ITEMS} elsewhere={FOOTER_ELSEWHERE} year={new Date().getFullYear()} />
-			</div>
+			<SiteFooter nav={NAV_ITEMS} elsewhere={FOOTER_ELSEWHERE} year={new Date().getFullYear()} />
 		</>
 	)
 }

@@ -10,6 +10,9 @@ import { FOOTER_ELSEWHERE, NAV_ITEMS } from "~/shared/navigation"
 import { getAllPosts, type Post } from "~/shared/blog"
 import { formatDateShort } from "~/shared/date"
 import { SITE_NAME, SITE_OG_IMAGE_PATH, SITE_URL } from "~/shared/site"
+import Main from "~/components/ui/main"
+import Container from "~/components/ui/container"
+import Stack from "~/components/ui/stack"
 
 interface BlogIndexProps {
 	posts: Post[]
@@ -50,8 +53,8 @@ export default function BlogIndex(props: BlogIndexProps) {
 
 			<NavBar items={NAV_ITEMS} current='/blog' />
 
-			<main className='max-w-page mx-auto my-0 py-0 px-gutter-wide'>
-				<section className='flex flex-col gap-6 px-gutter pt-10 pb-9 md:px-gutter-wide'>
+			<Main>
+				<Container as='section' width='full' gap='6' space='hero'>
 					<div>
 						<Paragraph variant={"eyebrow"} className='mt-reveal'>
 							Writing
@@ -63,17 +66,17 @@ export default function BlogIndex(props: BlogIndexProps) {
 					<Paragraph variant='muted' className='max-w-prose mt-reveal'>
 						{DESCRIPTION}
 					</Paragraph>
-				</section>
+				</Container>
 
-				<div className='px-gutter md:px-gutter-wide'>
+				<Container as='div' width='full'>
 					<Ornament />
-				</div>
+				</Container>
 
-				<section className='mx-auto flex w-full max-w-page flex-col gap-9 px-gutter py-9 md:px-gutter-wide'>
+				<Container as='section' gap='9' space='section'>
 					{yearGroups.map((group) => (
-						<div key={group.year} className='flex flex-col gap-4'>
+						<Stack gap='4' key={group.year}>
 							<Paragraph variant='eyebrow'>{group.year}</Paragraph>
-							<div className='flex flex-col'>
+							<Stack>
 								{group.posts.map((post) => (
 									<PostCard
 										key={post.slug}
@@ -85,11 +88,11 @@ export default function BlogIndex(props: BlogIndexProps) {
 										href={`/blog/${post.slug}`}
 									/>
 								))}
-							</div>
-						</div>
+							</Stack>
+						</Stack>
 					))}
-				</section>
-			</main>
+				</Container>
+			</Main>
 
 			<SiteFooter nav={NAV_ITEMS} elsewhere={FOOTER_ELSEWHERE} year={new Date().getFullYear()} />
 		</>

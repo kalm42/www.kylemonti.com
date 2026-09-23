@@ -1,5 +1,6 @@
 import type { GetStaticProps } from "next"
 import Head from "next/head"
+import Main from "~/components/ui/main"
 import Arch from "~/components/Arch"
 import Button from "~/components/Button"
 import NavBar from "~/components/NavBar"
@@ -14,6 +15,8 @@ import { formatDateShort } from "~/shared/date"
 import { FOOTER_ELSEWHERE, NAV_ITEMS } from "~/shared/navigation"
 import { PROJECTS } from "~/shared/projects"
 import { SITE_NAME, SITE_OG_IMAGE_PATH, SITE_URL } from "~/shared/site"
+import Container from "~/components/ui/container"
+import Stack from "~/components/ui/stack"
 
 const DESCRIPTION = "I build front-ends that feel unhurried. Writing, a résumé, and a workshop of small useful things."
 
@@ -39,10 +42,17 @@ export default function Home(props: HomeProps) {
 
 			<NavBar items={NAV_ITEMS} current='/' />
 
-			<main className='max-w-page mx-auto my-0 py-0 px-gutter-wide'>
+			<Main>
 				{/* Hero */}
-				<section className='flex w-full flex-col items-start gap-8 px-gutter pt-10 pb-9 md:flex-row md:items-center md:justify-between md:px-gutter-wide'>
-					<div className='flex max-w-2xl flex-col items-start gap-6'>
+				<Container
+					as='section'
+					width='full'
+					direction='responsive'
+					gap='8'
+					space='hero'
+					className='items-start md:items-center md:justify-between'
+				>
+					<Stack gap='6' className='max-w-2xl items-start'>
 						<p className='font-text text-eyebrow text-brass-ink uppercase mt-reveal'>Front-end engineer</p>
 						<Heading variant='display' size='lg' className='mt-reveal sm:text-display-xl lg:text-display-2xl'>
 							Careful interfaces, <em>quietly</em> built.
@@ -51,23 +61,23 @@ export default function Home(props: HomeProps) {
 							I build front-ends that feel unhurried. This is where I write about it and keep a workshop of small useful
 							things.
 						</Paragraph>
-						<div className='mt-reveal flex flex-wrap gap-4'>
+						<Stack direction='wrap' gap='4' className='mt-reveal'>
 							<Button href='/blog' arrow>
 								Read the writing
 							</Button>
 							<Button href='/workshop' variant='secondary'>
 								Open the workshop
 							</Button>
-						</div>
-					</div>
+						</Stack>
+					</Stack>
 					<div className='hidden shrink-0 md:block'>
 						<Arch size='hero' />
 					</div>
-				</section>
+				</Container>
 
-				<section className='mx-auto flex w-full max-w-page flex-col gap-6 px-gutter py-9 md:px-gutter-wide'>
+				<Container as='section' gap='6' space='section'>
 					<SectionHeading eyebrow='Writing' title='Latest writing' action='All essays' actionHref='/blog' />
-					<div className='flex flex-col'>
+					<Stack>
 						{recentPosts.map((post) => (
 							<PostCard
 								key={post.slug}
@@ -79,10 +89,10 @@ export default function Home(props: HomeProps) {
 								href={`/blog/${post.slug}`}
 							/>
 						))}
-					</div>
-				</section>
+					</Stack>
+				</Container>
 
-				<section className='mx-auto flex w-full max-w-page flex-col gap-6 px-gutter pb-9 md:px-gutter-wide'>
+				<Container as='section' gap='6' space='tail'>
 					<SectionHeading
 						eyebrow='Workshop'
 						title='Small useful things'
@@ -91,13 +101,13 @@ export default function Home(props: HomeProps) {
 					>
 						Side projects, each on its own address, each as small as it needs to be.
 					</SectionHeading>
-					<div className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
+					<Stack direction='grid' gap='6'>
 						{PROJECTS.map((project, index) => (
 							<ProjectCard key={project.href} {...project} index={index + 1} />
 						))}
-					</div>
-				</section>
-			</main>
+					</Stack>
+				</Container>
+			</Main>
 
 			<SiteFooter nav={NAV_ITEMS} elsewhere={FOOTER_ELSEWHERE} year={new Date().getFullYear()} />
 		</>
