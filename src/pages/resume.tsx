@@ -6,18 +6,17 @@ import ResumeEntry, { type ResumeEntryProps } from "~/components/ResumeEntry"
 import SectionHeading from "~/components/SectionHeading"
 import SiteFooter from "~/components/SiteFooter"
 import TagList from "~/components/TagList"
-import TextLink from "~/components/TextLink"
 import Container from "~/components/ui/container"
 import Heading from "~/components/ui/heading"
 import Main from "~/components/ui/main"
 import Stack from "~/components/ui/stack"
 import Paragraph from "~/components/ui/paragraph"
 import { FOOTER_ELSEWHERE, NAV_ITEMS } from "~/shared/navigation"
-import { SITE_NAME, SITE_OG_IMAGE_PATH, SITE_URL } from "~/shared/site"
+import { SITE_EMAIL, SITE_NAME, SITE_OG_IMAGE_PATH, SITE_URL } from "~/shared/site"
 
 const CURRENT_ROLE = "Front-End Tech Lead"
 const LOCATION = "Phoenix, AZ"
-const EMAIL = "kylemonti@pm.me"
+const EMAIL = SITE_EMAIL
 const LINKEDIN_URL = "https://www.linkedin.com/in/kyle-monti"
 
 const SUMMARY =
@@ -126,11 +125,13 @@ export default function Resume() {
 					<Stack direction='wrap' className='items-center gap-x-4 gap-y-2 font-text text-ui text-ink-muted mt-reveal'>
 						<span>{LOCATION}</span>
 						<span aria-hidden>·</span>
-						<TextLink href={`mailto:${EMAIL}`}>{EMAIL}</TextLink>
+						<Button href={`mailto:${EMAIL}`} variant='quiet' size='inherit' padding='none'>
+							{EMAIL}
+						</Button>
 						<span aria-hidden>·</span>
-						<TextLink href={LINKEDIN_URL} external>
+						<Button href={LINKEDIN_URL} external arrow variant='quiet' size='inherit' padding='none'>
 							LinkedIn
-						</TextLink>
+						</Button>
 					</Stack>
 					<div className='mt-reveal print:hidden'>
 						<Button icon='download' onClick={printPage}>

@@ -6,7 +6,7 @@ import { cn } from "~/shared/cn"
 
 const buttonStyles = cva(
 	[
-		"group relative inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-text",
+		"group relative inline-flex items-center justify-center gap-2 rounded-md font-text",
 		"transition-[transform,box-shadow,background-color,border-color,color] duration-base ease-glide",
 		"active:scale-press active:duration-instant py-0 disabled:pointer-events-none disabled:opacity-50",
 	],
@@ -14,18 +14,21 @@ const buttonStyles = cva(
 		variants: {
 			variant: {
 				primary: [
-					"bg-brand text-on-brand shadow-sm hover:-translate-y-0.5 hover:bg-brand-hover hover:shadow-md",
+					"whitespace-nowrap bg-brand text-on-brand shadow-sm hover:-translate-y-0.5 hover:bg-brand-hover hover:shadow-md",
 					"after:pointer-events-none after:absolute after:inset-1 after:rounded-sm after:border after:border-on-brand/0",
 					"after:transition-colors after:duration-base after:ease-glide hover:after:border-on-brand/30",
 				],
 				secondary:
-					"bg-transparent border border-border-strong text-ink hover:-translate-y-0.5 hover:border-ink hover:bg-paper-raised hover:shadow-sm",
+					"whitespace-nowrap bg-transparent border border-border-strong text-ink hover:-translate-y-0.5 hover:border-ink hover:bg-paper-raised hover:shadow-sm",
 				quiet: "text-ink hover:text-brand",
 			},
 			size: {
 				sm: "text-ui-sm",
 				md: "text-ui",
 				lg: "text-ui-lg",
+				// No font-size/weight/tracking of its own — for a quiet link used
+				// inline within running text, which must inherit that text's size.
+				inherit: "",
 			},
 			padding: {
 				sm: "h-[2.5rem] px-4",
@@ -98,13 +101,15 @@ const ButtonContent = (props: ButtonContentProps) => {
 }
 /**
  * The site's call to action: verb-first, sentence case. One `primary` per
- * view; `secondary` pairs alongside it; `quiet` is a standalone link-like
- * action, carrying the same brass-at-rest, evergreen-on-hover rule as
- * `TextLink`. Renders an `<a>`/`Link` when `href` is given, a `<button>`
- * otherwise.
+ * view; `secondary` pairs alongside it; `quiet` is an underlined-on-hover
+ * link-like action — use it for standalone actions (nav-style link lists,
+ * a section's "see all") and, with `size="inherit" padding="none"`, for a
+ * link inline within running text. Renders an `<a>`/`Link` when `href` is
+ * given, a `<button>` otherwise.
  *
  * @example <Button href="/blog" arrow>Read the writing</Button>
  * @example <Button variant="secondary" icon="download">Download PDF</Button>
+ * @example <Button href={url} variant="quiet" size="inherit" padding="none">an inline link</Button>
  */
 function Button(props: ButtonProps) {
 	const { variant, size, arrow = false, icon, padding, children } = props

@@ -3,8 +3,22 @@ import userEvent from "@testing-library/user-event"
 import { describe, expect, it, vi } from "vitest"
 
 import Resume from "~/pages/resume"
+import { SITE_EMAIL } from "~/shared/site"
 
 describe("Resume", () => {
+	it("links the email and LinkedIn contact details", () => {
+		// Arrange & Act
+		render(<Resume />)
+
+		// Assert
+		expect(screen.getByRole("link", { name: SITE_EMAIL })).toHaveAttribute("href", `mailto:${SITE_EMAIL}`)
+		const linkedInLinks = screen.getAllByRole("link", { name: "LinkedIn" })
+		expect(linkedInLinks.length).toBeGreaterThan(0)
+		for (const link of linkedInLinks) {
+			expect(link).toHaveAttribute("href", "https://www.linkedin.com/in/kyle-monti")
+		}
+	})
+
 	it("renders the résumé heading with the person's name", () => {
 		// Arrange & Act
 		render(<Resume />)
