@@ -2,6 +2,7 @@ import type { ReactNode } from "react"
 import Button from "~/components/Button"
 import Heading from "~/components/ui/heading"
 import Paragraph from "./ui/paragraph"
+import Stack from "./ui/stack"
 
 interface SectionHeadingProps {
 	eyebrow?: string
@@ -20,8 +21,8 @@ function SectionHeading(props: SectionHeadingProps) {
 	const { eyebrow, title, action, actionHref, children } = props
 
 	return (
-		<div className='flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between'>
-			<div className=''>
+		<Stack direction='responsive' gap='4' className='sm:items-end sm:justify-between'>
+			<div>
 				{eyebrow && <p className='font-text text-eyebrow text-brass-ink uppercase mb-3'>{eyebrow}</p>}
 				<Heading variant='display' size='md'>
 					{title}
@@ -37,7 +38,7 @@ function SectionHeading(props: SectionHeadingProps) {
 					{action}
 				</Button>
 			)}
-		</div>
+		</Stack>
 	)
 }
 

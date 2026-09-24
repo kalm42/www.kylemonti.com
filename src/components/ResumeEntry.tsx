@@ -2,6 +2,7 @@ import TagList from "~/components/TagList"
 import Paragraph from "./ui/paragraph"
 import Heading from "./ui/heading"
 import Button from "./Button"
+import Stack from "./ui/stack"
 
 interface ResumeEntryProps {
 	role: string
@@ -26,13 +27,17 @@ function ResumeEntry(props: ResumeEntryProps) {
 	const shownBullets = bullets.slice(0, 3)
 
 	return (
-		<div className='flex flex-col gap-4 border-b border-hairline py-8 break-inside-avoid sm:flex-row sm:gap-8'>
-			<div className='flex shrink-0 flex-col gap-1 sm:w-40'>
+		<Stack
+			direction='responsive'
+			gap='4'
+			className='border-b border-hairline py-8 break-inside-avoid sm:gap-8'
+		>
+			<Stack gap='1' className='shrink-0 sm:w-40'>
 				<Paragraph variant='eyebrow'>{period}</Paragraph>
 
 				{location && <Paragraph variant='caption'>{location}</Paragraph>}
-			</div>
-			<div className='flex flex-1 flex-col gap-3'>
+			</Stack>
+			<Stack gap='3' className='flex-1'>
 				<div>
 					<Heading size='lg'>{role}</Heading>
 					<Paragraph variant='muted'>
@@ -56,8 +61,8 @@ function ResumeEntry(props: ResumeEntryProps) {
 					</ul>
 				)}
 				<TagList tags={tags} />
-			</div>
-		</div>
+			</Stack>
+		</Stack>
 	)
 }
 

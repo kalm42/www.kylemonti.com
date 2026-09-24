@@ -1,6 +1,8 @@
 import type { MarkdownDocument } from "@tanstack/markdown"
 import type { GetStaticPaths, GetStaticProps } from "next"
 import Head from "next/head"
+
+import Main from "~/components/ui/main"
 import ArticleBody from "~/components/ArticleBody"
 import NavBar from "~/components/NavBar"
 import Ornament from "~/components/Ornament"
@@ -9,6 +11,8 @@ import SiteFooter from "~/components/SiteFooter"
 import TagList from "~/components/TagList"
 import Heading from "~/components/ui/heading"
 import Paragraph from "~/components/ui/paragraph"
+import Container from "~/components/ui/container"
+
 import { getAllPosts, getPostBySlug, getPostSlugs, type Post } from "~/shared/blog"
 import { formatDateLong } from "~/shared/date"
 import { FOOTER_ELSEWHERE, NAV_ITEMS } from "~/shared/navigation"
@@ -57,8 +61,8 @@ export default function BlogPost(props: BlogPostProps) {
 
 			<NavBar items={NAV_ITEMS} current='/blog' />
 
-			<main className='max-w-page mx-auto my-0 py-0 px-gutter-wide'>
-				<article className='mx-auto flex max-w-prose flex-col gap-4 px-gutter pt-10 pb-9 md:px-gutter-wide'>
+			<Main>
+				<Container as='article' width='prose' gap='4' space='article'>
 					<Heading size='2xl' className='mt-reveal'>
 						{post.title}
 					</Heading>
@@ -75,22 +79,22 @@ export default function BlogPost(props: BlogPostProps) {
 					<div className='mt-reveal'>
 						<TagList tags={post.tags} />
 					</div>
-				</article>
+				</Container>
 
-				<div className='px-gutter md:px-gutter-wide'>
+				<Container as='div' width='full'>
 					<Ornament />
-				</div>
+				</Container>
 
-				<div className='mx-auto flex w-full max-w-page justify-center px-gutter py-9 md:px-gutter-wide'>
+				<Container as='div' direction='row' space='feature' className='justify-center'>
 					<ArticleBody dropCap document={document} />
-				</div>
+				</Container>
 
 				{(previous !== undefined || next !== undefined) && (
 					<>
-						<div className='px-gutter md:px-gutter-wide mb-6'>
+						<Container as='div' width='full' space='divider'>
 							<Ornament />
-						</div>
-						<section className='mx-auto max-w-prose px-gutter pb-10 md:px-gutter-wide'>
+						</Container>
+						<Container as='section' width='prose' space='tail-lg'>
 							<div className='grid grid-cols-1 gap-6 sm:grid-cols-2'>
 								{previous !== undefined && (
 									<div className='flex flex-col gap-3'>
@@ -105,10 +109,10 @@ export default function BlogPost(props: BlogPostProps) {
 									</div>
 								)}
 							</div>
-						</section>
+						</Container>
 					</>
 				)}
-			</main>
+			</Main>
 
 			<SiteFooter nav={NAV_ITEMS} elsewhere={FOOTER_ELSEWHERE} year={new Date().getFullYear()} />
 		</>

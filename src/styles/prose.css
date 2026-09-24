@@ -16,6 +16,7 @@
 
 .mt-prose {
 	max-width: var(--container-prose);
+	min-width: 0;
 	font-family: var(--font-newsreader), "Iowan Old Style", Georgia, serif;
 }
 
@@ -139,6 +140,10 @@
 /* Inline code for identifiers/values only, never whole sentences. */
 .mt-prose pre code {
 	background: var(--paper-sunken);
+}
+
+.mt-prose pre[data-language] code {
+	background: unset;
 }
 
 .mt-prose code {

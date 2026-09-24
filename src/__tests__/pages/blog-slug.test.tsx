@@ -8,7 +8,7 @@ import { formatDateLong } from "~/shared/date"
 describe("BlogPost", () => {
 	it("renders the article title as the page heading", () => {
 		// Arrange
-		const { post, document } = getPostBySlug("designing-a-calmer-date-picker")
+		const { post, document } = getPostBySlug("how-to-type-event-handlers-with-typescript")
 		const previous = {
 			title: "Why springs feel right",
 			excerpt: "The physics behind interfaces that feel unhurried, and where a linear curve still wins.",
@@ -27,29 +27,29 @@ describe("BlogPost", () => {
 
 	it("renders a fenced code block from the article body", () => {
 		// Arrange
-		const { post, document } = getPostBySlug("designing-a-calmer-date-picker")
+		const { post, document } = getPostBySlug("how-to-type-event-handlers-with-typescript")
 
 		// Act
 		render(<BlogPost post={post} document={document} />)
 
 		// Assert
-		expect(screen.getByText(/usePointerRange/)).toBeInTheDocument()
+		expect(screen.getByText('"button"')).toBeInTheDocument()
 	})
 
 	it("renders a callout from the article body", () => {
 		// Arrange
-		const { post, document } = getPostBySlug("designing-a-calmer-date-picker")
+		const { post, document } = getPostBySlug("how-to-type-event-handlers-with-typescript")
 
 		// Act
 		render(<BlogPost post={post} document={document} />)
 
 		// Assert
-		expect(screen.getByText("Profile the interaction, not the render")).toBeInTheDocument()
+		expect(screen.getByText(/is not `event.currentTarget`/)).toBeInTheDocument()
 	})
 
 	it("links to the previous post when there is one", () => {
 		// Arrange
-		const { post, document } = getPostBySlug("designing-a-calmer-date-picker")
+		const { post, document } = getPostBySlug("how-to-type-event-handlers-with-typescript")
 		const previous = {
 			title: "Why springs feel right",
 			excerpt: "The physics behind interfaces that feel unhurried, and where a linear curve still wins.",

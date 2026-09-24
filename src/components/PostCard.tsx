@@ -4,6 +4,7 @@ import PostMeta from "./PostMeta"
 import TagList from "./TagList"
 import Heading from "./ui/heading"
 import Paragraph from "./ui/paragraph"
+import Stack from "./ui/stack"
 
 type PostCardVariant = "row" | "card"
 
@@ -52,13 +53,13 @@ function PostCard(props: PostCardProps) {
 				className='p-5 flex-col md:flex-row transition-colors duration-base rounded-lg hover:bg-paper-raised md:grid md:grid-cols-[10.5rem_1fr_2rem] flex items-start justify-between gap-6'
 			>
 				<PostMeta date={date} readingTime={readingTime} />
-				<div className='flex min-w-0 flex-col gap-2'>
+				<Stack gap='2' className='min-w-0'>
 					<Heading size='lg' className='mt-underline w-fit'>
 						{title}
 					</Heading>
 					<Paragraph variant='excerpt'>{excerpt}</Paragraph>
 					<TagList tags={tags} limit />
-				</div>
+				</Stack>
 				<span className='flex self-end md:self-auto shrink-0 translate-y-3 -translate-x-2.5 items-center text-brand opacity-0 transition-all duration-slow ease-glide group-hover:translate-x-0 group-hover:opacity-100'>
 					<Icon name='arrow-right' size={18} />
 				</span>

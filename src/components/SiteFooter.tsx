@@ -5,6 +5,9 @@ import Paragraph from "./ui/paragraph"
 import Heading from "./ui/heading"
 import Button from "./Button"
 import Icon from "./Icon"
+import { cn } from "~/shared/cn"
+import Container from "./ui/container"
+import Stack from "./ui/stack"
 
 interface SiteFooterProps {
 	nav: NavItem[]
@@ -22,7 +25,7 @@ function FooterColumn(props: FooterColumnProps) {
 	const { title, items, external = false } = props
 
 	return (
-		<div className='flex flex-col gap-3'>
+		<div className={cn("inline-block flex-1 md:flex md:flex-col gap-3", { "items-end text-end": external })}>
 			<Heading as='h4' size='md' variant='eyebrow' tone='brass-ink'>
 				{title}
 			</Heading>
@@ -50,10 +53,10 @@ function SiteFooter(props: SiteFooterProps) {
 	const { nav, elsewhere, year } = props
 
 	return (
-		<footer className='w-full px-gutter pb-8 md:px-gutter-wide'>
-			<div className='mx-auto flex w-full max-w-page flex-col gap-8'>
+		<footer className='w-full px-gutter pb-8 md:px-gutter-wide print:hidden'>
+			<Container width='page' gutter={false} gap='4' className='md:gap-8'>
 				<Ornament />
-				<div className='grid grid-cols-[1.6fr_1fr_1fr] gap-7 pt-7 pb-6'>
+				<div className='flex flex-wrap md:grid md:grid-cols-[1.6fr_1fr_1fr] gap-7 pt-7 pb-6'>
 					<div>
 						<Wordmark size='lg' href='/' />
 						<Paragraph variant='muted' className='mt-3'>
@@ -63,7 +66,7 @@ function SiteFooter(props: SiteFooterProps) {
 					<FooterColumn title='Site' items={nav} />
 					<FooterColumn title='Elsewhere' items={elsewhere} external={true} />
 				</div>
-				<div className='flex flex-wrap items-center justify-between gap-4'>
+				<Stack direction='wrap' gap='4' className='items-center justify-between'>
 					<p className='font-text text-caption text-ink-subtle'>
 						© {year} Kyle Monti. Set in Fraunces, Newsreader and JetBrains Mono.
 					</p>
@@ -74,8 +77,8 @@ function SiteFooter(props: SiteFooterProps) {
 						<Icon name='rss' size={16} />
 						RSS
 					</a>
-				</div>
-			</div>
+				</Stack>
+			</Container>
 		</footer>
 	)
 }

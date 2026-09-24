@@ -5,6 +5,7 @@ import ProjectCard from "~/components/ProjectCard"
 import SiteFooter from "~/components/SiteFooter"
 import Heading from "~/components/ui/heading"
 import Paragraph from "~/components/ui/paragraph"
+import Main from "~/components/ui/main"
 import { FOOTER_ELSEWHERE, NAV_ITEMS } from "~/shared/navigation"
 import { PROJECTS } from "~/shared/projects"
 import { SITE_NAME, SITE_OG_IMAGE_PATH, SITE_URL } from "~/shared/site"
@@ -26,7 +27,7 @@ export default function Workshop() {
 
 			<NavBar items={NAV_ITEMS} current='/workshop' />
 
-			<main className='max-w-page mx-auto my-0 py-0 px-gutter-wide'>
+			<Main>
 				<section className='flex flex-col gap-6 px-gutter pt-10 pb-9 md:px-gutter-wide'>
 					<div>
 						<p className='font-text text-eyebrow text-brass-ink uppercase mt-reveal'>Workshop</p>
@@ -51,7 +52,7 @@ export default function Workshop() {
 						))}
 					</div>
 				</section>
-			</main>
+			</Main>
 
 			<SiteFooter nav={NAV_ITEMS} elsewhere={FOOTER_ELSEWHERE} year={new Date().getFullYear()} />
 		</>

@@ -93,8 +93,8 @@ function NavBar(props: NavBarProps) {
 		<header
 			data-scrolled={sticky && scrolled}
 			className={cn(
+				"flex items-center z-40 w-full justify-center px-gutter md:px-gutter-wide print:hidden",
 				sticky && "top-0 sticky data-[scrolled=true]:bg-paper/84 data-[scrolled=true]:backdrop-saturate-130",
-				"flex items-center z-40 w-full justify-center px-gutter md:px-gutter-wide",
 				sticky && "border-b border-transparent transition-colors duration-base",
 				sticky && "data-[scrolled=true]:border-hairline data-[scrolled=true]:backdrop-blur-sm",
 			)}
