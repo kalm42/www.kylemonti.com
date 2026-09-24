@@ -29,7 +29,7 @@ describe("Resume", () => {
 	it("prints the page when the download button is clicked", async () => {
 		// Arrange
 		const user = userEvent.setup()
-		const print = vi.spyOn(window, "print").mockImplementation(() => {})
+		const print = vi.spyOn(window, "print").mockImplementation(() => undefined)
 		render(<Resume />)
 
 		// Act

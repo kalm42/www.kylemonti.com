@@ -8,7 +8,9 @@ describe("blog content", () => {
 		const slugs = getPostSlugs()
 
 		// Assert
-		expect(slugs).toEqual(expect.arrayContaining(["designing-a-calmer-date-picker", "why-springs-feel-right"]))
+		expect(slugs).toEqual(
+			expect.arrayContaining(["how-to-type-event-handlers-with-typescript", "why-not-to-use-wordpress"]),
+		)
 	})
 
 	it("sorts posts newest first", () => {
@@ -23,11 +25,11 @@ describe("blog content", () => {
 
 	it("parses a post's frontmatter and body", () => {
 		// Arrange & Act
-		const { post, document } = getPostBySlug("designing-a-calmer-date-picker")
+		const { post, document } = getPostBySlug("how-to-type-event-handlers-with-typescript")
 
 		// Assert
-		expect(post.title).toBe("Designing a calmer date picker")
-		expect(post.tags).toEqual(["React", "Design"])
+		expect(post.title).toBe("How to type event handlers with TypeScript")
+		expect(post.tags).toEqual(["TypeScript"])
 		expect(document.children.some((node) => node.type === "code")).toBe(true)
 		expect(document.children.some((node) => node.type === "callout")).toBe(true)
 	})

@@ -35,6 +35,9 @@ button?.addEventListener("click", function (event: MouseEvent) {
 })
 ```
 
+> [!TIP] `event.target` is not `event.currentTarget`
+> The generic type above describes `currentTarget` — the element the listener is attached to — not `target`, which is whatever element actually triggered the event and stays typed as the broader `EventTarget`. Read from `currentTarget` when you need the specific element type.
+
 ## Keydown
 
 The `keydown` event handler uses `KeyboardEvent`:

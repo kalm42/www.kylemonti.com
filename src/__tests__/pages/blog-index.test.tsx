@@ -4,6 +4,11 @@ import { describe, expect, it } from "vitest"
 import BlogIndex from "~/pages/blog/index"
 import { getAllPosts } from "~/shared/blog"
 
+/** Escapes regex metacharacters so a post title can be matched literally. */
+function escapeForRegExp(value: string): string {
+	return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+}
+
 describe("BlogIndex", () => {
 	it("renders the writing page heading", () => {
 		// Arrange
@@ -25,7 +30,10 @@ describe("BlogIndex", () => {
 
 		// Assert
 		for (const post of posts) {
-			expect(screen.getByRole("link", { name: new RegExp(post.title) })).toHaveAttribute("href", `/blog/${post.slug}`)
+			expect(screen.getByRole("link", { name: new RegExp(escapeForRegExp(post.title)) })).toHaveAttribute(
+				"href",
+				`/blog/${post.slug}`,
+			)
 		}
 	})
 })
