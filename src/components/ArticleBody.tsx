@@ -27,7 +27,7 @@ function MarkdownAnchor(props: ComponentPropsWithoutRef<"a">) {
 	)
 }
 
-const REACT_OPTIONS = { components: { a: MarkdownAnchor } satisfies MarkdownComponents }
+const REACT_OPTIONS = { allowHtml: true, components: { a: MarkdownAnchor } satisfies MarkdownComponents }
 
 /**
  * Turns a post's parsed `MarkdownDocument` into the styled article body:
