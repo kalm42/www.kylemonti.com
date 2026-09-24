@@ -1,10 +1,10 @@
 import type { BlockNode, MarkdownDocument } from "@tanstack/markdown"
 import { type MarkdownComponents, renderBlockReact } from "@tanstack/markdown/react"
 import type { ComponentPropsWithoutRef } from "react"
+import Button from "~/components/Button"
 import Callout, { type CalloutKind } from "~/components/Callout"
 import CodeBlock from "~/components/CodeBlock"
 import Prose from "~/components/Prose"
-import TextLink from "~/components/TextLink"
 
 interface ArticleBodyProps {
 	document: MarkdownDocument
@@ -19,10 +19,11 @@ function toCalloutKind(kind: string): CalloutKind {
 
 function MarkdownAnchor(props: ComponentPropsWithoutRef<"a">) {
 	const { href = "", children } = props
+	const external = href.startsWith("http")
 	return (
-		<TextLink href={href} external={href.startsWith("http")}>
+		<Button href={href} external={external} arrow={external} variant='quiet' size='inherit' padding='none'>
 			{children}
-		</TextLink>
+		</Button>
 	)
 }
 
