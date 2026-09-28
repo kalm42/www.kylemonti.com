@@ -33,4 +33,15 @@ describe("ArticleBody", () => {
 		expect(link).toHaveAttribute("rel", "noopener noreferrer")
 		expect(link.querySelector("svg")).toBeInTheDocument()
 	})
+
+	it("renders a raw HTML block as real markup instead of escaped text", () => {
+		// Arrange
+		const document = parseMarkdown('<div data-testid="demo">Hello</div>', { allowHtml: true })
+
+		// Act
+		render(<ArticleBody document={document} />)
+
+		// Assert
+		expect(screen.getByTestId("demo")).toHaveTextContent("Hello")
+	})
 })
