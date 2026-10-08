@@ -139,6 +139,8 @@
 
 /* Inline code for identifiers/values only, never whole sentences. */
 .mt-prose pre code {
+	/* Inline padding on a multi-line inline <code> only indents its first line. */
+	padding: 0;
 	background: var(--paper-sunken);
 }
 
