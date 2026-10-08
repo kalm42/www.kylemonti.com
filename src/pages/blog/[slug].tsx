@@ -15,6 +15,7 @@ import Container from "~/components/ui/container"
 
 import { getAllPosts, getPostBySlug, getPostSlugs, type Post } from "~/shared/blog"
 import { formatDateLong } from "~/shared/date"
+import postTitleTransitionName from "~/shared/post-title-transition"
 import { FOOTER_ELSEWHERE, NAV_ITEMS } from "~/shared/navigation"
 import { SITE_NAME, SITE_OG_IMAGE_PATH, SITE_URL } from "~/shared/site"
 
@@ -63,7 +64,7 @@ export default function BlogPost(props: BlogPostProps) {
 
 			<Main>
 				<Container as='article' width='prose' gap='4' space='article'>
-					<Heading size='2xl' className='mt-reveal'>
+					<Heading size='2xl' className='mt-reveal' transitionName={postTitleTransitionName(`/blog/${post.slug}`)}>
 						{post.title}
 					</Heading>
 					<Paragraph variant='lede' className='mt-reveal'>

@@ -1,5 +1,6 @@
 import Link from "next/link"
 import Icon from "~/components/Icon"
+import postTitleTransitionName from "~/shared/post-title-transition"
 import PostMeta from "./PostMeta"
 import TagList from "./TagList"
 import Heading from "./ui/heading"
@@ -27,6 +28,7 @@ interface PostCardProps {
  */
 function PostCard(props: PostCardProps) {
 	const { title, excerpt, date, readingTime, tags = [], href, variant = "row" } = props
+	const transitionName = postTitleTransitionName(href)
 
 	if (variant === "card") {
 		return (
@@ -36,7 +38,7 @@ function PostCard(props: PostCardProps) {
 					className='group flex flex-col gap-4 rounded-lg border border-hairline bg-paper-raised p-6 shadow-sm transition-all duration-base ease-glide hover:-translate-y-1 hover:border-brass hover:shadow-md'
 				>
 					<PostMeta date={date} readingTime={readingTime} />
-					<Heading size='lg' className='mt-underline w-fit'>
+					<Heading size='lg' className='mt-underline w-fit' transitionName={transitionName}>
 						{title}
 					</Heading>
 					<Paragraph variant='excerpt'>{excerpt}</Paragraph>
@@ -54,7 +56,7 @@ function PostCard(props: PostCardProps) {
 			>
 				<PostMeta date={date} readingTime={readingTime} />
 				<Stack gap='2' className='min-w-0'>
-					<Heading size='lg' className='mt-underline w-fit'>
+					<Heading size='lg' className='mt-underline w-fit' transitionName={transitionName}>
 						{title}
 					</Heading>
 					<Paragraph variant='excerpt'>{excerpt}</Paragraph>

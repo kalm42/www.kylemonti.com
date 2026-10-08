@@ -70,6 +70,8 @@ interface HeadingProps {
 	size: DisplaySize
 	variant?: HeadingVariant
 	className?: string
+	/** `view-transition-name` — give a heading on another page the same name and it morphs into this one on navigation. */
+	transitionName?: string
 }
 
 /**
@@ -86,11 +88,15 @@ interface HeadingProps {
  * @example <Heading size="lg" className="mt-underline w-fit">{title}</Heading>
  */
 function Heading(props: HeadingProps) {
-	const { tone, as, id, size, variant, className, children } = props
+	const { tone, as, id, size, variant, className, transitionName, children } = props
 	const Tag = as ?? (variant === "display" ? TAG_BY_DISPLAY_SIZE[size] : TAG_BY_HEADING_SIZE[size])
 
 	return (
-		<Tag id={id} className={cn(headingVariants({ tone, size, variant }), className)}>
+		<Tag
+			id={id}
+			className={cn(headingVariants({ tone, size, variant }), className)}
+			style={transitionName === undefined ? undefined : { viewTransitionName: transitionName }}
+		>
 			{children}
 		</Tag>
 	)
