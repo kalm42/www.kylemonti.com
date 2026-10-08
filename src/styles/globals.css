@@ -268,6 +268,30 @@ body {
 	}
 }
 
+/*
+ * Route view transitions (src/shared/route-view-transition.ts). The page
+ * crossfades; named elements (NavBar's site-header, Heading's transitionName)
+ * get their own group and morph between their old and new boxes.
+ */
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation-duration: var(--duration-base);
+	animation-timing-function: var(--ease-glide);
+}
+
+::view-transition-group(*) {
+	animation-duration: var(--duration-slow);
+	animation-timing-function: var(--ease-glide);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	::view-transition-group(*),
+	::view-transition-old(*),
+	::view-transition-new(*) {
+		animation: none !important;
+	}
+}
+
 @layer utilities {
 	/* Generic currentColor underline that draws on hover — post rows, card titles. */
 	.mt-underline {
